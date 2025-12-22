@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const services = [
+  {
+    icon: "bi-robot",
+    title: "Machine Learning",
+    description: "Custom ML models tailored to your business needs. From predictive analytics to recommendation systems."
+  },
+  {
+    icon: "bi-graph-up-arrow",
+    title: "Data Analytics",
+    description: "Transform raw data into actionable insights. Advanced analytics and visualization solutions."
+  },
+  {
+    icon: "bi-gear-wide-connected",
+    title: "MLOps & Automation",
+    description: "End-to-end ML pipeline development. Model deployment, monitoring, and continuous improvement."
+  },
+  {
+    icon: "bi-chat-dots",
+    title: "AI Integration",
+    description: "Integrate AI capabilities into your existing systems. APIs, chatbots, and intelligent workflows."
+  }
+];
+---
+
+<BaseLayout>
+  <Navbar />
+
+  <!-- Hero Section -->
+  <section class="hero-section d-flex align-items-center">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7">
+          <h1 class="display-3 fw-bold mb-4">
+            Intelligent Solutions for<br />
+            <span class="text-gradient">Modern Business</span>
+          </h1>
+          <p class="lead mb-4 text-white-50">
+            We help organizations harness the power of machine learning and AI
+            to drive innovation, optimize operations, and unlock new opportunities.
+          </p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="#contact" class="btn btn-light btn-lg px-4">Get Started</a>
+            <a href="#services" class="btn btn-outline-light btn-lg px-4">Learn More</a>
+          </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block text-center">
+          <div class="position-relative">
+            <i class="bi bi-diagram-3 display-1" style="font-size: 15rem; opacity: 0.1;"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="section-padding bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">Our Services</h2>
+        <p class="lead text-muted">Comprehensive AI and ML solutions for your business</p>
+      </div>
+      <div class="row g-4">
+        {services.map(service => (
+          <div class="col-md-6 col-lg-3">
+            <div class="card service-card h-100 p-4 text-center">
+              <div class="icon-box bg-gradient-primary text-white mx-auto mb-4">
+                <i class={`bi ${service.icon}`}></i>
+              </div>
+              <h5 class="fw-bold">{service.title}</h5>
+              <p class="text-muted mb-0">{service.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section-padding">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <h2 class="display-5 fw-bold mb-4">About ML Partners</h2>
+          <p class="lead text-muted mb-4">
+            We are a team of experienced data scientists and engineers passionate about
+            solving complex problems with intelligent solutions.
+          </p>
+          <p class="text-muted mb-4">
+            With expertise spanning machine learning, deep learning, natural language processing,
+            and computer vision, we deliver production-ready solutions that create real business value.
+          </p>
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-primary me-2 fs-4"></i>
+                <span>Production ML Systems</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-primary me-2 fs-4"></i>
+                <span>Cloud Native</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-primary me-2 fs-4"></i>
+                <span>Data Engineering</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-primary me-2 fs-4"></i>
+                <span>AI Strategy</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="bg-gradient-primary rounded-4 p-5 text-white">
+            <div class="row text-center g-4">
+              <div class="col-6">
+                <h3 class="display-4 fw-bold">10+</h3>
+                <p class="mb-0">Years Experience</p>
+              </div>
+              <div class="col-6">
+                <h3 class="display-4 fw-bold">50+</h3>
+                <p class="mb-0">Projects Delivered</p>
+              </div>
+              <div class="col-6">
+                <h3 class="display-4 fw-bold">100%</h3>
+                <p class="mb-0">Client Satisfaction</p>
+              </div>
+              <div class="col-6">
+                <h3 class="display-4 fw-bold">24/7</h3>
+                <p class="mb-0">Support Available</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section-padding bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="display-5 fw-bold mb-4">Let's Work Together</h2>
+          <p class="lead text-muted mb-5">
+            Ready to transform your business with AI? Get in touch and let's discuss your project.
+          </p>
+          <div class="card border-0 shadow-lg p-4 p-md-5">
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="text-center">
+                  <i class="bi bi-envelope-fill fs-1 text-primary mb-3"></i>
+                  <h6 class="fw-bold">Email</h6>
+                  <a href="mailto:contact@mlpartnersllc.com" class="text-muted text-decoration-none">
+                    contact@mlpartnersllc.com
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <i class="bi bi-geo-alt-fill fs-1 text-primary mb-3"></i>
+                  <h6 class="fw-bold">Location</h6>
+                  <p class="text-muted mb-0">United States</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <i class="bi bi-linkedin fs-1 text-primary mb-3"></i>
+                  <h6 class="fw-bold">LinkedIn</h6>
+                  <a href="https://linkedin.com" class="text-muted text-decoration-none" target="_blank" rel="noopener">
+                    Connect with us
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

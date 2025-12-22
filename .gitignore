@@ -25,3 +25,4 @@ npm-debug.log*
 
 # Astro
 .astro/
+.playwright-mcp/

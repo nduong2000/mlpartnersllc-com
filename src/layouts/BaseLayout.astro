@@ -18,22 +18,45 @@ const {
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   </head>
   <body>
     <slot />
     <script is:inline src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script is:inline>
+      // Intersection Observer for fade-in animations
+      document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+      });
+    </script>
   </body>
 </html>
 
 <style is:global>
   :root {
-    --primary-color: #0d6efd;
-    --dark-bg: #1a1a2e;
-    --gradient-start: #0f0c29;
-    --gradient-mid: #302b63;
-    --gradient-end: #24243e;
+    --primary: #4f46e5;
+    --primary-light: #6366f1;
+    --primary-dark: #3730a3;
+    --text-dark: #1a1f36;
+    --text-muted: #5a6478;
+    --bg-light: #f8f9ff;
+    --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
 
   html {
@@ -41,52 +64,277 @@ const {
   }
 
   body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
   }
 
+  /* Ultra-light typography for modern look */
+  h1, h2, h3 {
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-weight: 200;
+  }
+
+  .fw-bold {
+    font-weight: 600 !important;
+  }
+
+  /* Hero Section */
   .hero-section {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+    background: var(--bg-gradient);
     min-height: 100vh;
     color: white;
+    position: relative;
+    overflow: hidden;
   }
 
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Section Styling */
   .section-padding {
-    padding: 5rem 0;
+    padding: 6rem 0;
+  }
+
+  .bg-light {
+    background: var(--bg-light) !important;
+  }
+
+  /* Cards */
+  .card {
+    border: none;
+    border-radius: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .service-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
-    border-radius: 1rem;
+    background: white;
+    box-shadow: var(--shadow-sm);
   }
 
   .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
   }
 
+  .project-card {
+    background: white;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+
+  .project-card:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .project-card .card-header {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 1.5rem;
+  }
+
+  /* Icon Box */
   .icon-box {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 1rem;
-    font-size: 2rem;
+    font-size: 1.75rem;
+    transition: transform 0.3s ease;
   }
 
+  .service-card:hover .icon-box {
+    transform: scale(1.1);
+  }
+
+  /* Gradient Utilities */
   .bg-gradient-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-primary);
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
+  .text-primary {
+    color: var(--primary) !important;
+  }
+
+  /* Stats Cards */
+  .stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #a5b4fc;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.25rem;
+  }
+
+  /* Tech Badge */
+  .tech-badge {
+    display: inline-block;
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin: 0.25rem;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    background: var(--gradient-primary);
+    border: none;
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+  }
+
+  .btn-outline-light {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+  }
+
+  .btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+  }
+
+  /* Fade-in Animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+  .fade-in-delay-4 { transition-delay: 0.4s; }
+
+  /* Footer */
   footer {
-    background: var(--dark-bg);
+    background: linear-gradient(180deg, #1a1f36 0%, #0f1219 100%);
+  }
+
+  /* Glassmorphism Navigation */
+  .navbar-glass {
+    background: rgba(26, 31, 54, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-glass.scrolled {
+    background: rgba(26, 31, 54, 0.95);
+  }
+
+  /* Neural Network SVG Animation */
+  .neural-svg {
+    position: absolute;
+    right: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50%;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .neural-svg .node {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .neural-svg .node:nth-child(2n) {
+    animation-delay: 0.5s;
+  }
+
+  .neural-svg .node:nth-child(3n) {
+    animation-delay: 1s;
+  }
+
+  .neural-svg .path {
+    stroke-dasharray: 100;
+    animation: flow 3s linear infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  @keyframes flow {
+    0% { stroke-dashoffset: 100; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .neural-svg {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .section-padding {
+      padding: 4rem 0;
+    }
+
+    h1.display-3 {
+      font-size: 2.5rem;
+    }
+
+    h2.display-5 {
+      font-size: 1.75rem;
+    }
   }
 </style>

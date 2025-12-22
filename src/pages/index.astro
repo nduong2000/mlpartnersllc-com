@@ -5,25 +5,44 @@ import Footer from '../components/Footer.astro';
 
 const services = [
   {
-    icon: "bi-robot",
-    title: "Machine Learning",
-    description: "Custom ML models tailored to your business needs. From predictive analytics to recommendation systems."
-  },
-  {
     icon: "bi-graph-up-arrow",
-    title: "Data Analytics",
-    description: "Transform raw data into actionable insights. Advanced analytics and visualization solutions."
+    title: "Energy Market Analytics",
+    description: "Real-time price forecasting and market analysis for wholesale energy markets. MISO, SPP, and beyond."
   },
   {
-    icon: "bi-gear-wide-connected",
-    title: "MLOps & Automation",
-    description: "End-to-end ML pipeline development. Model deployment, monitoring, and continuous improvement."
+    icon: "bi-cpu",
+    title: "Machine Learning Systems",
+    description: "Production-grade ML pipelines with LSTM forecasting, feature engineering, and automated retraining."
   },
   {
-    icon: "bi-chat-dots",
-    title: "AI Integration",
-    description: "Integrate AI capabilities into your existing systems. APIs, chatbots, and intelligent workflows."
+    icon: "bi-diagram-3",
+    title: "Graph Analytics",
+    description: "Network topology analysis using DuckPGQ. Constraint propagation and correlation clustering."
+  },
+  {
+    icon: "bi-speedometer2",
+    title: "High-Performance ETL",
+    description: "Async data pipelines with 70x performance gains. HTTP/2 pooling and parallel processing."
   }
+];
+
+const projectStats = [
+  { value: "$49K", label: "Validated Profit" },
+  { value: "4.10", label: "Sharpe Ratio" },
+  { value: "70x", label: "Performance Gain" },
+  { value: "59M+", label: "Records Processed" }
+];
+
+const technologies = [
+  "Python", "PyTorch", "FastAPI", "DuckDB", "LSTM", "MLflow",
+  "Plotly", "Asyncio", "HTTP/2", "Graph Analytics"
+];
+
+const expertise = [
+  { title: "Production ML Systems", icon: "bi-gear-fill" },
+  { title: "Energy Markets", icon: "bi-lightning-charge-fill" },
+  { title: "Data Engineering", icon: "bi-database-fill" },
+  { title: "Full-Stack Development", icon: "bi-stack" }
 ];
 ---
 
@@ -32,25 +51,200 @@ const services = [
 
   <!-- Hero Section -->
   <section class="hero-section d-flex align-items-center">
-    <div class="container">
+    <div class="container position-relative">
       <div class="row align-items-center">
         <div class="col-lg-7">
-          <h1 class="display-3 fw-bold mb-4">
-            Intelligent Solutions for<br />
-            <span class="text-gradient">Modern Business</span>
+          <h1 class="display-3 mb-4">
+            Machine Learning<br />
+            <span class="text-gradient fw-bold">Engineering Excellence</span>
           </h1>
           <p class="lead mb-4 text-white-50">
-            We help organizations harness the power of machine learning and AI
-            to drive innovation, optimize operations, and unlock new opportunities.
+            Building production-grade ML systems for energy markets and beyond.
+            From LSTM forecasting to graph analytics, delivering measurable results.
           </p>
-          <div class="d-flex gap-3 flex-wrap">
-            <a href="#contact" class="btn btn-light btn-lg px-4">Get Started</a>
-            <a href="#services" class="btn btn-outline-light btn-lg px-4">Learn More</a>
+          <div class="d-flex gap-3 flex-wrap mb-5">
+            <a href="#projects" class="btn btn-light btn-lg px-4">View Projects</a>
+            <a href="#contact" class="btn btn-outline-light btn-lg px-4">Get in Touch</a>
+          </div>
+          <div class="row g-3 mt-4">
+            {projectStats.map(stat => (
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="stat-value">{stat.value}</div>
+                  <div class="stat-label">{stat.label}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        <div class="col-lg-5 d-none d-lg-block text-center">
-          <div class="position-relative">
-            <i class="bi bi-diagram-3 display-1" style="font-size: 15rem; opacity: 0.1;"></i>
+        <div class="col-lg-5 d-none d-lg-block">
+          <!-- Neural Network SVG Animation -->
+          <svg class="neural-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Connections -->
+            <g stroke="rgba(165, 180, 252, 0.3)" stroke-width="1" fill="none">
+              <path class="path" d="M80,100 L160,60" />
+              <path class="path" d="M80,100 L160,140" />
+              <path class="path" d="M80,200 L160,140" />
+              <path class="path" d="M80,200 L160,200" />
+              <path class="path" d="M80,200 L160,260" />
+              <path class="path" d="M80,300 L160,260" />
+              <path class="path" d="M80,300 L160,340" />
+              <path class="path" d="M160,60 L240,100" />
+              <path class="path" d="M160,140 L240,100" />
+              <path class="path" d="M160,140 L240,200" />
+              <path class="path" d="M160,200 L240,200" />
+              <path class="path" d="M160,260 L240,200" />
+              <path class="path" d="M160,260 L240,300" />
+              <path class="path" d="M160,340 L240,300" />
+              <path class="path" d="M240,100 L320,150" />
+              <path class="path" d="M240,200 L320,150" />
+              <path class="path" d="M240,200 L320,250" />
+              <path class="path" d="M240,300 L320,250" />
+            </g>
+            <!-- Nodes -->
+            <g fill="rgba(165, 180, 252, 0.8)">
+              <circle class="node" cx="80" cy="100" r="8" />
+              <circle class="node" cx="80" cy="200" r="8" />
+              <circle class="node" cx="80" cy="300" r="8" />
+              <circle class="node" cx="160" cy="60" r="6" />
+              <circle class="node" cx="160" cy="140" r="6" />
+              <circle class="node" cx="160" cy="200" r="6" />
+              <circle class="node" cx="160" cy="260" r="6" />
+              <circle class="node" cx="160" cy="340" r="6" />
+              <circle class="node" cx="240" cy="100" r="6" />
+              <circle class="node" cx="240" cy="200" r="6" />
+              <circle class="node" cx="240" cy="300" r="6" />
+              <circle class="node" cx="320" cy="150" r="8" />
+              <circle class="node" cx="320" cy="250" r="8" />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Project Section -->
+  <section id="projects" class="section-padding">
+    <div class="container">
+      <div class="text-center mb-5 fade-in">
+        <h2 class="display-5 fw-bold">Featured Project</h2>
+        <p class="lead text-muted">Production ML system for energy market trading</p>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="card project-card fade-in">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <div>
+                <h3 class="h4 mb-1 fw-bold">MISO Energy Trading Platform</h3>
+                <p class="mb-0 opacity-75">Virtual Trading &amp; ML Forecasting System</p>
+              </div>
+              <a href="https://mlpartnership.com/miso/" target="_blank" rel="noopener" class="btn btn-light btn-sm">
+                <i class="bi bi-box-arrow-up-right me-1"></i> Live Dashboard
+              </a>
+            </div>
+            <div class="card-body p-4">
+              <div class="row g-4">
+                <div class="col-lg-8">
+                  <p class="text-muted mb-4">
+                    A production-grade energy trading platform combining real-time data collection,
+                    LSTM neural network forecasting, graph network analysis, and automated trading
+                    strategies for the MISO wholesale energy market. Processes 59M+ pricing records
+                    across 2,546 nodes.
+                  </p>
+
+                  <h5 class="fw-bold mb-3">Key Achievements</h5>
+                  <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
+                        <div>
+                          <strong>LSTM Forecasting</strong>
+                          <p class="text-muted small mb-0">359K parameter model, 70.5% win rate, 7-day price predictions</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
+                        <div>
+                          <strong>High-Performance ETL</strong>
+                          <p class="text-muted small mb-0">70x faster data collection via async HTTP/2 and parallel processing</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
+                        <div>
+                          <strong>Graph Analytics</strong>
+                          <p class="text-muted small mb-0">DuckPGQ with 2,546 vertices, 623K edges for constraint propagation</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
+                        <div>
+                          <strong>Multi-Agent Orchestration</strong>
+                          <p class="text-muted small mb-0">LLM routing with 60-80% cost savings via intelligent provider selection</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h5 class="fw-bold mb-3">Technologies</h5>
+                  <div class="mb-2">
+                    {technologies.map(tech => (
+                      <span class="tech-badge">{tech}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <div class="bg-gradient-primary rounded-4 p-4 text-white h-100">
+                    <h5 class="fw-bold mb-4">Trading Results</h5>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                        <span class="opacity-75">Validated P&L</span>
+                        <strong>$49,789</strong>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                        <span class="opacity-75">Sharpe Ratio</span>
+                        <strong>4.10</strong>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                        <span class="opacity-75">Win Rate</span>
+                        <strong>63.3%</strong>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                        <span class="opacity-75">Test Period</span>
+                        <strong>150 days</strong>
+                      </div>
+                    </div>
+                    <hr class="opacity-25" />
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                        <span class="opacity-75">Database Size</span>
+                        <strong>39 GB</strong>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                        <span class="opacity-75">Test Coverage</span>
+                        <strong>264 tests</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -60,13 +254,13 @@ const services = [
   <!-- Services Section -->
   <section id="services" class="section-padding bg-light">
     <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold">Our Services</h2>
-        <p class="lead text-muted">Comprehensive AI and ML solutions for your business</p>
+      <div class="text-center mb-5 fade-in">
+        <h2 class="display-5 fw-bold">Technical Expertise</h2>
+        <p class="lead text-muted">End-to-end ML engineering capabilities</p>
       </div>
       <div class="row g-4">
-        {services.map(service => (
-          <div class="col-md-6 col-lg-3">
+        {services.map((service, index) => (
+          <div class={`col-md-6 col-lg-3 fade-in fade-in-delay-${index + 1}`}>
             <div class="card service-card h-100 p-4 text-center">
               <div class="icon-box bg-gradient-primary text-white mx-auto mb-4">
                 <i class={`bi ${service.icon}`}></i>
@@ -84,61 +278,45 @@ const services = [
   <section id="about" class="section-padding">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="col-lg-6 mb-4 mb-lg-0 fade-in">
           <h2 class="display-5 fw-bold mb-4">About ML Partners</h2>
           <p class="lead text-muted mb-4">
-            We are a team of experienced data scientists and engineers passionate about
-            solving complex problems with intelligent solutions.
+            Production ML engineering with a focus on energy markets and quantitative systems.
           </p>
           <p class="text-muted mb-4">
-            With expertise spanning machine learning, deep learning, natural language processing,
-            and computer vision, we deliver production-ready solutions that create real business value.
+            Expertise spanning machine learning, deep learning, data engineering, and full-stack development.
+            Building systems that process millions of records, generate actionable forecasts, and deliver
+            measurable business outcomes.
           </p>
           <div class="row g-3">
-            <div class="col-6">
-              <div class="d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-primary me-2 fs-4"></i>
-                <span>Production ML Systems</span>
+            {expertise.map(item => (
+              <div class="col-6">
+                <div class="d-flex align-items-center">
+                  <i class={`bi ${item.icon} text-primary me-2 fs-5`}></i>
+                  <span>{item.title}</span>
+                </div>
               </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-primary me-2 fs-4"></i>
-                <span>Cloud Native</span>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-primary me-2 fs-4"></i>
-                <span>Data Engineering</span>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-primary me-2 fs-4"></i>
-                <span>AI Strategy</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 fade-in fade-in-delay-2">
           <div class="bg-gradient-primary rounded-4 p-5 text-white">
             <div class="row text-center g-4">
               <div class="col-6">
-                <h3 class="display-4 fw-bold">10+</h3>
-                <p class="mb-0">Years Experience</p>
+                <h3 class="display-4 fw-bold">70x</h3>
+                <p class="mb-0 opacity-75">Performance Gains</p>
               </div>
               <div class="col-6">
-                <h3 class="display-4 fw-bold">50+</h3>
-                <p class="mb-0">Projects Delivered</p>
+                <h3 class="display-4 fw-bold">59M+</h3>
+                <p class="mb-0 opacity-75">Records Processed</p>
               </div>
               <div class="col-6">
-                <h3 class="display-4 fw-bold">100%</h3>
-                <p class="mb-0">Client Satisfaction</p>
+                <h3 class="display-4 fw-bold">264</h3>
+                <p class="mb-0 opacity-75">Automated Tests</p>
               </div>
               <div class="col-6">
-                <h3 class="display-4 fw-bold">24/7</h3>
-                <p class="mb-0">Support Available</p>
+                <h3 class="display-4 fw-bold">99.9%</h3>
+                <p class="mb-0 opacity-75">System Uptime</p>
               </div>
             </div>
           </div>
@@ -151,10 +329,10 @@ const services = [
   <section id="contact" class="section-padding bg-light">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="display-5 fw-bold mb-4">Let's Work Together</h2>
+        <div class="col-lg-8 text-center fade-in">
+          <h2 class="display-5 fw-bold mb-4">Get in Touch</h2>
           <p class="lead text-muted mb-5">
-            Ready to transform your business with AI? Get in touch and let's discuss your project.
+            Interested in ML engineering for your project? Let's discuss.
           </p>
           <div class="card border-0 shadow-lg p-4 p-md-5">
             <div class="row g-4">
@@ -176,10 +354,10 @@ const services = [
               </div>
               <div class="col-md-4">
                 <div class="text-center">
-                  <i class="bi bi-linkedin fs-1 text-primary mb-3"></i>
-                  <h6 class="fw-bold">LinkedIn</h6>
-                  <a href="https://linkedin.com" class="text-muted text-decoration-none" target="_blank" rel="noopener">
-                    Connect with us
+                  <i class="bi bi-github fs-1 text-primary mb-3"></i>
+                  <h6 class="fw-bold">GitHub</h6>
+                  <a href="https://github.com/nduong2000" class="text-muted text-decoration-none" target="_blank" rel="noopener">
+                    View Projects
                   </a>
                 </div>
               </div>

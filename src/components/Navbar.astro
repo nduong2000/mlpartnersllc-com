@@ -1,12 +1,13 @@
 ---
 const navLinks = [
-  { href: "#services", label: "Services" },
+  { href: "#projects", label: "Projects" },
+  { href: "#services", label: "Expertise" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 ---
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-glass" id="mainNav">
   <div class="container">
     <a class="navbar-brand fw-bold" href="#">
       <i class="bi bi-cpu me-2"></i>ML Partners
@@ -27,24 +28,34 @@ const navLinks = [
 </nav>
 
 <style>
-  #mainNav {
-    transition: background-color 0.3s ease;
-    background: transparent;
-  }
-
-  #mainNav.scrolled {
-    background: rgba(26, 26, 46, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  .navbar-glass {
+    transition: all 0.3s ease;
   }
 
   .nav-link {
     font-weight: 500;
     transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .nav-link:hover::after {
+    width: 80%;
   }
 
   .nav-link:hover {
-    color: #667eea !important;
+    color: #a5b4fc !important;
   }
 </style>
 

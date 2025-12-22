@@ -10,32 +10,54 @@ const currentYear = new Date().getFullYear();
           <i class="bi bi-cpu me-2"></i>ML Partners LLC
         </h5>
         <p class="text-white-50">
-          Delivering intelligent solutions through machine learning and AI expertise.
+          Production ML engineering for energy markets and quantitative systems.
         </p>
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h6 class="fw-bold mb-3">Quick Links</h6>
         <ul class="list-unstyled">
-          <li><a href="#services" class="text-white-50 text-decoration-none">Services</a></li>
-          <li><a href="#about" class="text-white-50 text-decoration-none">About</a></li>
-          <li><a href="#contact" class="text-white-50 text-decoration-none">Contact</a></li>
+          <li class="mb-2"><a href="#projects" class="text-white-50 text-decoration-none footer-link">Projects</a></li>
+          <li class="mb-2"><a href="#services" class="text-white-50 text-decoration-none footer-link">Expertise</a></li>
+          <li class="mb-2"><a href="#about" class="text-white-50 text-decoration-none footer-link">About</a></li>
+          <li><a href="#contact" class="text-white-50 text-decoration-none footer-link">Contact</a></li>
         </ul>
       </div>
       <div class="col-lg-4">
         <h6 class="fw-bold mb-3">Connect</h6>
-        <div class="d-flex gap-3">
-          <a href="https://linkedin.com" class="text-white-50 fs-4" target="_blank" rel="noopener">
-            <i class="bi bi-linkedin"></i>
-          </a>
-          <a href="https://github.com" class="text-white-50 fs-4" target="_blank" rel="noopener">
+        <div class="d-flex gap-3 mb-3">
+          <a href="https://github.com/nduong2000" class="text-white-50 fs-4 social-link" target="_blank" rel="noopener" aria-label="GitHub">
             <i class="bi bi-github"></i>
           </a>
         </div>
+        <p class="text-white-50 small mb-0">
+          <a href="https://mlpartnership.com/miso/" target="_blank" rel="noopener" class="text-white-50 text-decoration-none footer-link">
+            <i class="bi bi-box-arrow-up-right me-1"></i>Live MISO Dashboard
+          </a>
+        </p>
       </div>
     </div>
-    <hr class="my-4 border-secondary" />
+    <hr class="my-4 border-secondary opacity-25" />
     <div class="text-center text-white-50">
       <small>&copy; {currentYear} ML Partners LLC. All rights reserved.</small>
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-link {
+    transition: color 0.3s ease;
+  }
+
+  .footer-link:hover {
+    color: #a5b4fc !important;
+  }
+
+  .social-link {
+    transition: all 0.3s ease;
+  }
+
+  .social-link:hover {
+    color: #a5b4fc !important;
+    transform: translateY(-3px);
+  }
+</style>

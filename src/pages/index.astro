@@ -27,10 +27,10 @@ const services = [
 ];
 
 const projectStats = [
-  { value: "$49K", label: "Validated Profit" },
-  { value: "4.10", label: "Sharpe Ratio" },
   { value: "70x", label: "Performance Gain" },
-  { value: "59M+", label: "Records Processed" }
+  { value: "59M+", label: "Records Processed" },
+  { value: "264", label: "Automated Tests" },
+  { value: "99.9%", label: "System Uptime" }
 ];
 
 const technologies = [
@@ -144,105 +144,58 @@ const expertise = [
               </a>
             </div>
             <div class="card-body p-4">
-              <div class="row g-4">
-                <div class="col-lg-8">
-                  <p class="text-muted mb-4">
-                    A production-grade energy trading platform combining real-time data collection,
-                    LSTM neural network forecasting, graph network analysis, and automated trading
-                    strategies for the MISO wholesale energy market. Processes 59M+ pricing records
-                    across 2,546 nodes.
-                  </p>
+              <p class="text-muted mb-4">
+                A production-grade energy trading platform combining real-time data collection,
+                LSTM neural network forecasting, graph network analysis, and automated trading
+                strategies for the MISO wholesale energy market. Processes 59M+ pricing records
+                across 2,546 nodes.
+              </p>
 
-                  <h5 class="fw-bold mb-3">Key Achievements</h5>
-                  <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                      <div class="d-flex align-items-start">
-                        <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
-                        <div>
-                          <strong>LSTM Forecasting</strong>
-                          <p class="text-muted small mb-0">359K parameter model, 70.5% win rate, 7-day price predictions</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="d-flex align-items-start">
-                        <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
-                        <div>
-                          <strong>High-Performance ETL</strong>
-                          <p class="text-muted small mb-0">70x faster data collection via async HTTP/2 and parallel processing</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="d-flex align-items-start">
-                        <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
-                        <div>
-                          <strong>Graph Analytics</strong>
-                          <p class="text-muted small mb-0">DuckPGQ with 2,546 vertices, 623K edges for constraint propagation</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="d-flex align-items-start">
-                        <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
-                        <div>
-                          <strong>Multi-Agent Orchestration</strong>
-                          <p class="text-muted small mb-0">LLM routing with 60-80% cost savings via intelligent provider selection</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <h5 class="fw-bold mb-3">Technologies</h5>
-                  <div class="mb-2">
-                    {technologies.map(tech => (
-                      <span class="tech-badge">{tech}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div class="col-lg-4">
-                  <div class="bg-gradient-primary rounded-4 p-4 text-white h-100">
-                    <h5 class="fw-bold mb-4">Trading Results</h5>
-                    <div class="mb-3">
-                      <div class="d-flex justify-content-between">
-                        <span class="opacity-75">Validated P&L</span>
-                        <strong>$49,789</strong>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <div class="d-flex justify-content-between">
-                        <span class="opacity-75">Sharpe Ratio</span>
-                        <strong>4.10</strong>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <div class="d-flex justify-content-between">
-                        <span class="opacity-75">Win Rate</span>
-                        <strong>63.3%</strong>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <div class="d-flex justify-content-between">
-                        <span class="opacity-75">Test Period</span>
-                        <strong>150 days</strong>
-                      </div>
-                    </div>
-                    <hr class="opacity-25" />
-                    <div class="mb-3">
-                      <div class="d-flex justify-content-between">
-                        <span class="opacity-75">Database Size</span>
-                        <strong>39 GB</strong>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <div class="d-flex justify-content-between">
-                        <span class="opacity-75">Test Coverage</span>
-                        <strong>264 tests</strong>
-                      </div>
+              <h5 class="fw-bold mb-3">Key Achievements</h5>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6 col-lg-3">
+                  <div class="d-flex align-items-start">
+                    <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
+                    <div>
+                      <strong>LSTM Forecasting</strong>
+                      <p class="text-muted small mb-0">359K parameter model, 70.5% win rate, 7-day price predictions</p>
                     </div>
                   </div>
                 </div>
+                <div class="col-md-6 col-lg-3">
+                  <div class="d-flex align-items-start">
+                    <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
+                    <div>
+                      <strong>High-Performance ETL</strong>
+                      <p class="text-muted small mb-0">70x faster data collection via async HTTP/2 and parallel processing</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <div class="d-flex align-items-start">
+                    <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
+                    <div>
+                      <strong>Graph Analytics</strong>
+                      <p class="text-muted small mb-0">DuckPGQ with 2,546 vertices, 623K edges for constraint propagation</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <div class="d-flex align-items-start">
+                    <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
+                    <div>
+                      <strong>Multi-Agent Orchestration</strong>
+                      <p class="text-muted small mb-0">LLM routing with 60-80% cost savings via intelligent provider selection</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h5 class="fw-bold mb-3">Technologies</h5>
+              <div class="mb-0">
+                {technologies.map(tech => (
+                  <span class="tech-badge">{tech}</span>
+                ))}
               </div>
             </div>
           </div>

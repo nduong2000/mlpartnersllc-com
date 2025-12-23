@@ -2,4 +2,14 @@
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  server: {
+    host: '0.0.0.0',
+    port: 4321
+  },
+  vite: {
+    server: {
+      allowedHosts: ['mlpartnersllc.com', 'www.mlpartnersllc.com', 'localhost', '127.0.0.1']
+    }
+  }
+});

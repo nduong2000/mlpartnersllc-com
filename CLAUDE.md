@@ -28,3 +28,22 @@ npm run preview  # Preview production build locally
 **Styling:** Global styles in BaseLayout.astro, component-scoped styles using `<style>` tags. Bootstrap loaded via CDN, Bootstrap Icons via CDN.
 
 **Build:** Static site generation - no server required for deployment.
+
+## Deployment
+
+**Production URL:** https://mlpartnersllc.com
+
+**Server:** OpenResty/nginx reverse proxy to Astro dev server
+
+**Nginx Config:** `/usr/local/openresty/nginx/conf/conf.d/mlpartnersllc.com.conf`
+
+**SSL:** Let's Encrypt certificate via certbot (auto-renews)
+
+### Deploying Changes
+1. Changes to Astro files are hot-reloaded (dev server running in background)
+2. To restart dev server: `npm run dev --host 0.0.0.0`
+3. Nginx config changes: copy from `nginx/` and reload OpenResty:
+   ```bash
+   sudo cp nginx/mlpartnersllc.com.conf /usr/local/openresty/nginx/conf/conf.d/
+   sudo systemctl reload openresty
+   ```

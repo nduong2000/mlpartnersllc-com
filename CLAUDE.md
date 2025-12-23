@@ -1,10 +1,6 @@
-# CLAUDE.md
+# ML Partners, LLC Website
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Project Overview
-
-ML Partners LLC company website - a professional business landing page built with Astro and Bootstrap.
+Professional business landing page built with Astro and Bootstrap.
 
 ## Development Commands
 

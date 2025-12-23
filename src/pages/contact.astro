@@ -1,0 +1,241 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const contactInfo = [
+  {
+    icon: "bi-envelope-fill",
+    title: "Email",
+    content: "nduong@mlpartnersllc.com",
+    href: "mailto:nduong@mlpartnersllc.com",
+    description: "Get in touch for project inquiries"
+  },
+  {
+    icon: "bi-geo-alt-fill",
+    title: "Location",
+    content: "United States",
+    href: null,
+    description: "Available for remote collaboration"
+  },
+  {
+    icon: "bi-github",
+    title: "GitHub",
+    content: "View Projects",
+    href: "https://github.com/nduong2000",
+    description: "Check out our open source work"
+  },
+  {
+    icon: "bi-linkedin",
+    title: "LinkedIn",
+    content: "Connect",
+    href: "https://linkedin.com/in/nduong",
+    description: "Professional networking"
+  }
+];
+---
+
+<BaseLayout title="Contact Us - ML Partners, LLC" description="Get in touch with ML Partners, LLC for ML engineering, energy market analytics, and data-driven solutions.">
+  <Navbar currentPage="contact" />
+
+  <!-- Hero Section -->
+  <section class="contact-hero d-flex align-items-center">
+    <div class="container position-relative">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h1 class="display-3 mb-4">
+            Let's <span class="text-gradient fw-bold">Connect</span>
+          </h1>
+          <p class="lead mb-0 text-white-50">
+            Ready to discuss your ML engineering project? We're here to help transform your data into actionable insights.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Cards Section -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="row g-4">
+            {contactInfo.map((item, index) => (
+              <div class={`col-md-6 col-lg-3 fade-in fade-in-delay-${index + 1}`}>
+                <div class="card contact-card h-100 p-4 text-center">
+                  <div class="icon-box bg-gradient-primary text-white mx-auto mb-3">
+                    <i class={`bi ${item.icon}`}></i>
+                  </div>
+                  <h5 class="fw-bold mb-2">{item.title}</h5>
+                  <p class="text-muted small mb-3">{item.description}</p>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      class="contact-link"
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href.startsWith('http') ? 'noopener' : undefined}
+                    >
+                      {item.content}
+                    </a>
+                  ) : (
+                    <span class="text-muted">{item.content}</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Primary Contact CTA -->
+  <section class="section-padding bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-lg overflow-hidden fade-in">
+            <div class="card-header bg-gradient-primary text-white py-4">
+              <h3 class="h4 mb-1 fw-bold text-center">Get in Touch</h3>
+              <p class="mb-0 text-center opacity-75">We typically respond within 24 hours</p>
+            </div>
+            <div class="card-body p-4 p-md-5">
+              <div class="text-center">
+                <i class="bi bi-envelope-paper-fill display-1 text-primary mb-4"></i>
+                <h4 class="fw-bold mb-3">Email Us Directly</h4>
+                <p class="text-muted mb-4">
+                  For project inquiries, consultations, or questions about our ML engineering services,
+                  reach out via email. We're happy to discuss how we can help with your data challenges.
+                </p>
+                <a href="mailto:nduong@mlpartnersllc.com" class="btn btn-primary btn-lg px-5">
+                  <i class="bi bi-envelope me-2"></i>nduong@mlpartnersllc.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Quick Links -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="text-center mb-5 fade-in">
+        <h2 class="display-6 fw-bold">How Can We Help?</h2>
+        <p class="lead text-muted">Our areas of expertise</p>
+      </div>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-3 fade-in fade-in-delay-1">
+          <div class="text-center p-4">
+            <i class="bi bi-graph-up-arrow fs-1 text-primary mb-3"></i>
+            <h6 class="fw-bold">Energy Market Analytics</h6>
+            <p class="text-muted small mb-0">MISO, SPP market analysis and forecasting</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 fade-in fade-in-delay-2">
+          <div class="text-center p-4">
+            <i class="bi bi-cpu fs-1 text-primary mb-3"></i>
+            <h6 class="fw-bold">ML Systems</h6>
+            <p class="text-muted small mb-0">Production-grade machine learning pipelines</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 fade-in fade-in-delay-3">
+          <div class="text-center p-4">
+            <i class="bi bi-diagram-3 fs-1 text-primary mb-3"></i>
+            <h6 class="fw-bold">Graph Analytics</h6>
+            <p class="text-muted small mb-0">Network analysis and optimization</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 fade-in fade-in-delay-4">
+          <div class="text-center p-4">
+            <i class="bi bi-speedometer2 fs-1 text-primary mb-3"></i>
+            <h6 class="fw-bold">Data Engineering</h6>
+            <p class="text-muted small mb-0">High-performance ETL and data pipelines</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5 fade-in">
+        <a href="/#services" class="btn btn-outline-primary btn-lg">
+          <i class="bi bi-arrow-left me-2"></i>View All Services
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    background: var(--bg-gradient);
+    min-height: 50vh;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    padding-top: 100px;
+  }
+
+  .contact-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .contact-card {
+    background: white;
+    box-shadow: var(--shadow-sm);
+    border-radius: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .contact-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .contact-card .icon-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .contact-card:hover .icon-box {
+    transform: scale(1.1);
+  }
+
+  .contact-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .contact-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+  }
+
+  .btn-outline-primary {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: 500;
+  }
+
+  .btn-outline-primary:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+</style>

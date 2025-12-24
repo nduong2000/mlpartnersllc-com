@@ -30,16 +30,19 @@ npm run preview  # Preview production build locally
 
 **Production URL:** https://mlpartnersllc.com
 
-**Server:** OpenResty/nginx reverse proxy to Astro dev server
+**Server:** OpenResty/nginx serving static files from `dist/`
 
 **Nginx Config:** `/usr/local/openresty/nginx/conf/conf.d/mlpartnersllc.com.conf`
 
 **SSL:** Let's Encrypt certificate via certbot (auto-renews)
 
 ### Deploying Changes
-1. Changes to Astro files are hot-reloaded (dev server running in background)
-2. To restart dev server: `npm run dev --host 0.0.0.0`
-3. Nginx config changes: copy from `nginx/` and reload OpenResty:
+1. Build the static site:
+   ```bash
+   npm run build
+   ```
+2. Nginx serves from `dist/` automatically - no restart needed for content changes
+3. For nginx config changes:
    ```bash
    sudo cp nginx/mlpartnersllc.com.conf /usr/local/openresty/nginx/conf/conf.d/
    sudo systemctl reload openresty

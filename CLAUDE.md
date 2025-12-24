@@ -18,6 +18,7 @@ npm run preview  # Preview production build locally
 - `src/layouts/BaseLayout.astro` - Main HTML layout with Bootstrap CSS/JS imports
 - `src/components/` - Reusable components (Navbar, Footer)
 - `src/pages/index.astro` - Landing page with hero, services, about, contact sections
+- `src/pages/contact.astro` - Dedicated contact page
 - `public/` - Static assets (favicon)
 - `dist/` - Build output (static HTML)
 
@@ -43,3 +44,16 @@ npm run preview  # Preview production build locally
    sudo cp nginx/mlpartnersllc.com.conf /usr/local/openresty/nginx/conf/conf.d/
    sudo systemctl reload openresty
    ```
+
+## Email
+
+**Contact Email:** nduong@mlpartnersllc.com
+
+**Forwarding:** AWS SES forwards to duong.nick@gmail.com
+
+**Setup:**
+- Domain verified in AWS SES (us-east-1)
+- DKIM enabled
+- MX record: `10 inbound-smtp.us-east-1.amazonaws.com`
+- Lambda forwarder: `SESEmailForwarder`
+- Receipt rule set: `mlpartnership-email-rules`

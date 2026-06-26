@@ -2,62 +2,90 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="text-white py-5">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4 mb-4 mb-lg-0">
-        <h5 class="fw-bold mb-3">
-          <i class="bi bi-cpu me-2"></i>ML Partners, LLC
-        </h5>
-        <p class="text-white-50">
-          MISO market participant since 2008. Energy trading and ML engineering.
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-name">ML Partners, LLC</div>
+        <p class="footer-tag">
+          Proprietary energy trading. Certified MISO market participant since 2008.
         </p>
       </div>
-      <div class="col-lg-4 mb-4 mb-lg-0">
-        <h6 class="fw-bold mb-3">Quick Links</h6>
-        <ul class="list-unstyled">
-          <li class="mb-2"><a href="#projects" class="text-white-50 text-decoration-none footer-link">Projects</a></li>
-          <li class="mb-2"><a href="#services" class="text-white-50 text-decoration-none footer-link">Expertise</a></li>
-          <li class="mb-2"><a href="#about" class="text-white-50 text-decoration-none footer-link">About</a></li>
-          <li><a href="#contact" class="text-white-50 text-decoration-none footer-link">Contact</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-4">
-        <h6 class="fw-bold mb-3">Connect</h6>
-        <div class="d-flex gap-3 mb-3">
-          <a href="https://github.com/nduong2000" class="text-white-50 fs-4 social-link" target="_blank" rel="noopener" aria-label="GitHub">
-            <i class="bi bi-github"></i>
-          </a>
-        </div>
-        <p class="text-white-50 small mb-0">
-          <a href="https://mlpartnership.com/miso/" target="_blank" rel="noopener" class="text-white-50 text-decoration-none footer-link">
-            <i class="bi bi-box-arrow-up-right me-1"></i>Live MISO Dashboard
-          </a>
-        </p>
-      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/#desk">Desk</a>
+        <a href="/#edge">Edge</a>
+        <a href="/#footprint">Footprint</a>
+        <a href="/#record">Record</a>
+        <a href="/contact">Contact</a>
+      </nav>
     </div>
-    <hr class="my-4 border-secondary opacity-25" />
-    <div class="text-center text-white-50">
-      <small>&copy; {currentYear} ML Partners, LLC. All rights reserved.</small>
+    <div class="footer-base mono">
+      <span>&copy; {currentYear} ML Partners, LLC</span>
+      <span class="footer-note">Map visualization is stylized &amp; illustrative — not live grid data</span>
     </div>
   </div>
 </footer>
 
 <style>
-  .footer-link {
-    transition: color 0.3s ease;
+  .footer {
+    border-top: 1px solid var(--line);
+    background: var(--night-2);
+    padding: 3.5rem 0 2rem;
   }
 
-  .footer-link:hover {
-    color: #a5b4fc !important;
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
   }
 
-  .social-link {
-    transition: all 0.3s ease;
+  .footer-name {
+    font-variation-settings: 'wdth' 120;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
   }
 
-  .social-link:hover {
-    color: #a5b4fc !important;
-    transform: translateY(-3px);
+  .footer-tag {
+    color: var(--muted);
+    font-size: 0.85rem;
+    max-width: 340px;
+    margin: 0;
   }
+
+  .footer-links {
+    display: flex;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.25s ease;
+  }
+
+  .footer-links a:hover { color: var(--amber); }
+
+  .footer-base {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line-soft);
+    padding-top: 1.5rem;
+    color: var(--muted);
+    font-size: 0.64rem;
+  }
+
+  .footer-note { opacity: 0.7; }
 </style>

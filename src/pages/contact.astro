@@ -2,163 +2,63 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-
-const contactInfo = [
-  {
-    icon: "bi-envelope-fill",
-    title: "Email",
-    content: "nduong@mlpartnersllc.com",
-    href: "mailto:nduong@mlpartnersllc.com",
-    description: "Get in touch for project inquiries"
-  },
-  {
-    icon: "bi-geo-alt-fill",
-    title: "Location",
-    content: "United States",
-    href: null,
-    description: "Available for remote collaboration"
-  },
-  {
-    icon: "bi-github",
-    title: "GitHub",
-    content: "View Projects",
-    href: "https://github.com/nduong2000",
-    description: "Check out our open source work"
-  },
-  {
-    icon: "bi-linkedin",
-    title: "LinkedIn",
-    content: "Connect",
-    href: "https://linkedin.com/in/nduong",
-    description: "Professional networking"
-  }
-];
 ---
 
-<BaseLayout title="Contact Us - ML Partners, LLC" description="Get in touch with ML Partners, LLC for ML engineering, energy market analytics, and data-driven solutions.">
-  <Navbar currentPage="contact" />
+<BaseLayout
+  title="Contact — ML Partners, LLC"
+  description="Reach the ML Partners trading desk. Proprietary energy trading firm — MISO market participant since 2008."
+>
+  <Navbar />
 
-  <!-- Hero Section -->
-  <section class="contact-hero d-flex align-items-center">
-    <div class="container position-relative">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h1 class="display-3 mb-4">
-            Let's <span class="text-gradient fw-bold">Connect</span>
-          </h1>
-          <p class="lead mb-0 text-white-50">
-            Ready to discuss your ML engineering project? We're here to help transform your data into actionable insights.
-          </p>
-        </div>
-      </div>
+  <section class="contact-hero">
+    <div class="wrap">
+      <p class="eyebrow">/ Contact</p>
+      <h1 class="contact-title display-xl">Reach<br />the desk.</h1>
+      <p class="contact-sub">
+        ML Partners is a proprietary trading firm — we don't take clients or
+        manage outside capital. For counterparty matters, market questions, or
+        anything else, send a message below.
+      </p>
     </div>
   </section>
 
-  <!-- Contact Cards Section -->
-  <section class="section-padding">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="row g-4">
-            {contactInfo.map((item, index) => (
-              <div class={`col-md-6 col-lg-3 fade-in fade-in-delay-${index + 1}`}>
-                <div class="card contact-card h-100 p-4 text-center">
-                  <div class="icon-box bg-gradient-primary text-white mx-auto mb-3">
-                    <i class={`bi ${item.icon}`}></i>
-                  </div>
-                  <h5 class="fw-bold mb-2">{item.title}</h5>
-                  <p class="text-muted small mb-3">{item.description}</p>
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      class="contact-link"
-                      target={item.href.startsWith('http') ? '_blank' : undefined}
-                      rel={item.href.startsWith('http') ? 'noopener' : undefined}
-                    >
-                      {item.content}
-                    </a>
-                  ) : (
-                    <span class="text-muted">{item.content}</span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section class="sec">
+    <div class="wrap form-wrap">
+      <form id="contactForm" class="panel contact-form reveal" novalidate>
+        <div class="panel-index">/ Message the Desk</div>
 
-  <!-- Primary Contact CTA -->
-  <section class="section-padding bg-light">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="card border-0 shadow-lg overflow-hidden fade-in">
-            <div class="card-header bg-gradient-primary text-white py-4">
-              <h3 class="h4 mb-1 fw-bold text-center">Get in Touch</h3>
-              <p class="mb-0 text-center opacity-75">We typically respond within 24 hours</p>
-            </div>
-            <div class="card-body p-4 p-md-5">
-              <div class="text-center">
-                <i class="bi bi-envelope-paper-fill display-1 text-primary mb-4"></i>
-                <h4 class="fw-bold mb-3">Email Us Directly</h4>
-                <p class="text-muted mb-4">
-                  For project inquiries, consultations, or questions about our ML engineering services,
-                  reach out via email. We're happy to discuss how we can help with your data challenges.
-                </p>
-                <a href="mailto:nduong@mlpartnersllc.com" class="btn btn-primary btn-lg px-5">
-                  <i class="bi bi-envelope me-2"></i>nduong@mlpartnersllc.com
-                </a>
-              </div>
-            </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-name" class="mono">Name</label>
+            <input id="cf-name" name="name" type="text" maxlength="100" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="cf-email" class="mono">Email</label>
+            <input id="cf-email" name="email" type="email" maxlength="200" required autocomplete="email" />
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Services Quick Links -->
-  <section class="section-padding">
-    <div class="container">
-      <div class="text-center mb-5 fade-in">
-        <h2 class="display-6 fw-bold">How Can We Help?</h2>
-        <p class="lead text-muted">Our areas of expertise</p>
-      </div>
-      <div class="row g-4 justify-content-center">
-        <div class="col-md-6 col-lg-3 fade-in fade-in-delay-1">
-          <div class="text-center p-4">
-            <i class="bi bi-graph-up-arrow fs-1 text-primary mb-3"></i>
-            <h6 class="fw-bold">Energy Market Analytics</h6>
-            <p class="text-muted small mb-0">MISO, SPP market analysis and forecasting</p>
-          </div>
+        <div class="field">
+          <label for="cf-message" class="mono">Message</label>
+          <textarea id="cf-message" name="message" rows="7" maxlength="5000" required></textarea>
         </div>
-        <div class="col-md-6 col-lg-3 fade-in fade-in-delay-2">
-          <div class="text-center p-4">
-            <i class="bi bi-cpu fs-1 text-primary mb-3"></i>
-            <h6 class="fw-bold">ML Systems</h6>
-            <p class="text-muted small mb-0">Production-grade machine learning pipelines</p>
-          </div>
+
+        <!-- Honeypot — humans never see this -->
+        <div class="field hp" aria-hidden="true">
+          <label for="cf-website">Website</label>
+          <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off" />
         </div>
-        <div class="col-md-6 col-lg-3 fade-in fade-in-delay-3">
-          <div class="text-center p-4">
-            <i class="bi bi-diagram-3 fs-1 text-primary mb-3"></i>
-            <h6 class="fw-bold">Graph Analytics</h6>
-            <p class="text-muted small mb-0">Network analysis and optimization</p>
-          </div>
+
+        <div class="form-foot">
+          <button type="submit" class="btn btn-solid" id="cf-submit">Send Message</button>
+          <p class="form-status mono" id="cf-status" role="status"></p>
         </div>
-        <div class="col-md-6 col-lg-3 fade-in fade-in-delay-4">
-          <div class="text-center p-4">
-            <i class="bi bi-speedometer2 fs-1 text-primary mb-3"></i>
-            <h6 class="fw-bold">Data Engineering</h6>
-            <p class="text-muted small mb-0">High-performance ETL and data pipelines</p>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mt-5 fade-in">
-        <a href="/#services" class="btn btn-outline-primary btn-lg">
-          <i class="bi bi-arrow-left me-2"></i>View All Services
-        </a>
+      </form>
+
+      <div class="panel contact-sent" id="contactSent" hidden>
+        <div class="panel-index">/ Transmitted</div>
+        <h2 class="sent-title">Message received.</h2>
+        <p>Your message is on its way to the desk — typically answered within 24 hours.</p>
       </div>
     </div>
   </section>
@@ -168,74 +68,164 @@ const contactInfo = [
 
 <style>
   .contact-hero {
-    background: var(--bg-gradient);
-    min-height: 50vh;
-    color: white;
     position: relative;
+    padding: 11rem 0 5rem;
     overflow: hidden;
-    padding-top: 100px;
+    background:
+      radial-gradient(ellipse 70% 60% at 75% 20%, rgba(255, 180, 84, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 20% 80%, rgba(30, 52, 90, 0.5) 0%, transparent 65%),
+      radial-gradient(rgba(233, 228, 216, 0.1) 1px, transparent 1.5px);
+    background-size: auto, auto, 28px 28px;
   }
 
-  .contact-hero::before {
-    content: '';
+  .contact-title {
+    font-size: clamp(2.6rem, 6.5vw, 5rem);
+    margin: 1.4rem 0 1.8rem;
+  }
+
+  .contact-sub {
+    max-width: 540px;
+    color: var(--muted);
+    font-size: 1.02rem;
+    margin: 0;
+  }
+
+  .form-wrap { max-width: 880px; }
+
+  .contact-form { padding: 2.4rem 2.2rem 2.2rem; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+  }
+
+  .field { margin-bottom: 1.5rem; }
+
+  .field label {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 0.55rem;
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: rgba(5, 9, 16, 0.6);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 0.98rem;
+    padding: 0.85rem 1rem;
+    border-radius: 0;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    resize: vertical;
+  }
+
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--amber);
+    box-shadow: 0 0 0 1px var(--amber), 0 0 24px rgba(255, 180, 84, 0.15);
+  }
+
+  /* Honeypot: visually removed, still in the DOM for bots */
+  .hp {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .form-foot {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+  }
+
+  .btn[disabled] {
+    opacity: 0.55;
     pointer-events: none;
   }
 
-  .contact-card {
-    background: white;
-    box-shadow: var(--shadow-sm);
-    border-radius: 1rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  .form-status {
+    margin: 0;
+    color: var(--muted);
   }
 
-  .contact-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
+  .form-status.error { color: #ff7e6b; }
+
+  .contact-sent { padding: 3rem 2.2rem; }
+
+  .sent-title {
+    font-variation-settings: 'wdth' 118;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+    color: var(--amber);
   }
 
-  .contact-card .icon-box {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1rem;
-    font-size: 1.5rem;
-    transition: transform 0.3s ease;
+  .contact-sent p {
+    color: var(--muted);
+    margin: 0;
   }
 
-  .contact-card:hover .icon-box {
-    transform: scale(1.1);
-  }
-
-  .contact-link {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-  }
-
-  .contact-link:hover {
-    color: var(--primary-dark);
-    text-decoration: underline;
-  }
-
-  .btn-outline-primary {
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    font-weight: 500;
-  }
-
-  .btn-outline-primary:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+    .contact-hero { padding-top: 8.5rem; }
   }
 </style>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement | null;
+  const status = document.getElementById('cf-status')!;
+  const submit = document.getElementById('cf-submit') as HTMLButtonElement;
+  const sent = document.getElementById('contactSent')!;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.textContent = '';
+    status.classList.remove('error');
+
+    const data = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value.trim(),
+      email: (form.elements.namedItem('email') as HTMLInputElement).value.trim(),
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim(),
+      website: (form.elements.namedItem('website') as HTMLInputElement).value,
+    };
+
+    if (data.name.length < 2 || !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(data.email) || data.message.length < 10) {
+      status.textContent = 'Please fill in name, a valid email, and a message (10+ characters).';
+      status.classList.add('error');
+      return;
+    }
+
+    submit.disabled = true;
+    status.textContent = 'Transmitting…';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const body = await res.json().catch(() => ({ ok: false }));
+      if (res.ok && body.ok) {
+        form.hidden = true;
+        sent.hidden = false;
+        sent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        status.textContent = body.error || 'Could not send right now — please try again later.';
+        status.classList.add('error');
+        submit.disabled = false;
+      }
+    } catch {
+      status.textContent = 'Network error — please try again.';
+      status.classList.add('error');
+      submit.disabled = false;
+    }
+  });
+</script>

@@ -1,0 +1,13 @@
+[Unit]
+Description=mlpartnersllc.com contact form API (SES relay)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /mnt/ssd/github/mlpartnersllc.com/server/contact_api.py
+Restart=on-failure
+RestartSec=5
+Environment=AWS_DEFAULT_REGION=us-east-1
+
+[Install]
+WantedBy=multi-user.target

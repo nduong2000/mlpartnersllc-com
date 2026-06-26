@@ -2,326 +2,460 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import NightGrid from '../components/NightGrid.astro';
 
-const services = [
-  {
-    icon: "bi-graph-up-arrow",
-    title: "Energy Market Analytics",
-    description: "Real-time price forecasting and market analysis for wholesale energy markets. MISO, SPP, and beyond."
-  },
-  {
-    icon: "bi-cpu",
-    title: "Machine Learning Systems",
-    description: "Production-grade ML pipelines with LSTM forecasting, feature engineering, and automated retraining."
-  },
-  {
-    icon: "bi-diagram-3",
-    title: "Graph Analytics",
-    description: "Network topology analysis using DuckPGQ. Constraint propagation and correlation clustering."
-  },
-  {
-    icon: "bi-speedometer2",
-    title: "High-Performance ETL",
-    description: "Async data pipelines with 70x performance gains. HTTP/2 pooling and parallel processing."
-  }
+const heroStats = [
+  { value: "2008", label: "MISO Participant Since" },
+  { value: "2,546", label: "Pricing Nodes Tracked" },
+  { value: "59M+", label: "Price Records" },
+  { value: "623K", label: "Transmission Graph Edges" },
 ];
 
-const projectStats = [
-  { value: "70x", label: "Performance Gain" },
-  { value: "59M+", label: "Records Processed" },
+const deskPanels = [
+  {
+    index: "01",
+    title: "Virtual Trading",
+    body: "Increment offers and decrement bids across the MISO footprint — positions on the spread between day-ahead and real-time prices, placed where the models see the grid mispriced.",
+  },
+  {
+    index: "02",
+    title: "Price Forecasting",
+    body: "An in-house LSTM network — 359,000 parameters trained on 59 million nodal price records — sits behind every position the desk takes.",
+  },
+  {
+    index: "03",
+    title: "Congestion Analytics",
+    body: "The transmission system as a graph: 2,546 vertices, 623,000 edges. When a constraint binds, congestion ripples outward — we map where it lands before it gets there.",
+  },
+];
+
+const edgeStats = [
+  { value: "70×", label: "ETL Acceleration" },
   { value: "264", label: "Automated Tests" },
-  { value: "99.9%", label: "System Uptime" }
+  { value: "99.9%", label: "System Uptime" },
+  { value: "359K", label: "Model Parameters" },
 ];
 
-const technologies = [
-  "Python", "PyTorch", "FastAPI", "DuckDB", "LSTM", "MLflow",
-  "Plotly", "Asyncio", "HTTP/2", "Graph Analytics"
+const footprintStats = [
+  { value: "15", label: "U.S. States + Manitoba" },
+  { value: "45M", label: "People Served" },
+  { value: "65K+", label: "Miles of Transmission" },
+  { value: "127GW", label: "Peak Demand Record" },
 ];
 
-const expertise = [
-  { title: "Production ML Systems", icon: "bi-gear-fill" },
-  { title: "Energy Markets", icon: "bi-lightning-charge-fill" },
-  { title: "Data Engineering", icon: "bi-database-fill" },
-  { title: "Full-Stack Development", icon: "bi-stack" }
+const registry = [
+  { key: "Entity", val: "ML Partners, LLC" },
+  { key: "Origin", val: "ML Partnership LLC" },
+  { key: "Status", val: "Certified MISO Market Participant" },
+  { key: "Since", val: "2008" },
+  { key: "Regulatory Record", val: "Clean" },
+  { key: "Capital", val: "Proprietary — no clients, no outside money" },
+];
+
+const tickerItems = [
+  ["MINN.HUB", "DA ⇄ RT"],
+  ["ILLINOIS.HUB", "LMP · MCC · MLC"],
+  ["MICH.HUB", "EX-ANTE / EX-POST"],
+  ["INDIANA.HUB", "VIRTUALS"],
+  ["ARKANSAS.HUB", "DA ⇄ RT"],
+  ["MS.HUB", "NODAL"],
+  ["LOUISIANA.HUB", "CONGESTION"],
+  ["TEXAS.HUB", "DA ⇄ RT"],
 ];
 ---
 
 <BaseLayout>
   <Navbar />
 
-  <!-- Hero Section -->
-  <section class="hero-section d-flex align-items-center">
-    <div class="container position-relative">
-      <div class="row align-items-center">
-        <div class="col-lg-7">
-          <h1 class="display-3 mb-4">
-            Machine Learning<br />
-            <span class="text-gradient fw-bold">Engineering Excellence</span>
-          </h1>
-          <p class="lead mb-4 text-white-50">
-            Building production-grade ML systems for energy markets and beyond.
-            From LSTM forecasting to graph analytics, delivering measurable results.
-          </p>
-          <div class="d-flex gap-3 flex-wrap mb-5">
-            <a href="#projects" class="btn btn-light btn-lg px-4">View Projects</a>
-            <a href="#contact" class="btn btn-outline-light btn-lg px-4">Get in Touch</a>
-          </div>
-          <div class="row g-3 mt-4">
-            {projectStats.map(stat => (
-              <div class="col-6 col-md-3">
-                <div class="stat-card">
-                  <div class="stat-value">{stat.value}</div>
-                  <div class="stat-label">{stat.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div class="col-lg-5 d-none d-lg-block">
-          <!-- Neural Network SVG Animation -->
-          <svg class="neural-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-            <!-- Connections -->
-            <g stroke="rgba(165, 180, 252, 0.3)" stroke-width="1" fill="none">
-              <path class="path" d="M80,100 L160,60" />
-              <path class="path" d="M80,100 L160,140" />
-              <path class="path" d="M80,200 L160,140" />
-              <path class="path" d="M80,200 L160,200" />
-              <path class="path" d="M80,200 L160,260" />
-              <path class="path" d="M80,300 L160,260" />
-              <path class="path" d="M80,300 L160,340" />
-              <path class="path" d="M160,60 L240,100" />
-              <path class="path" d="M160,140 L240,100" />
-              <path class="path" d="M160,140 L240,200" />
-              <path class="path" d="M160,200 L240,200" />
-              <path class="path" d="M160,260 L240,200" />
-              <path class="path" d="M160,260 L240,300" />
-              <path class="path" d="M160,340 L240,300" />
-              <path class="path" d="M240,100 L320,150" />
-              <path class="path" d="M240,200 L320,150" />
-              <path class="path" d="M240,200 L320,250" />
-              <path class="path" d="M240,300 L320,250" />
-            </g>
-            <!-- Nodes -->
-            <g fill="rgba(165, 180, 252, 0.8)">
-              <circle class="node" cx="80" cy="100" r="8" />
-              <circle class="node" cx="80" cy="200" r="8" />
-              <circle class="node" cx="80" cy="300" r="8" />
-              <circle class="node" cx="160" cy="60" r="6" />
-              <circle class="node" cx="160" cy="140" r="6" />
-              <circle class="node" cx="160" cy="200" r="6" />
-              <circle class="node" cx="160" cy="260" r="6" />
-              <circle class="node" cx="160" cy="340" r="6" />
-              <circle class="node" cx="240" cy="100" r="6" />
-              <circle class="node" cx="240" cy="200" r="6" />
-              <circle class="node" cx="240" cy="300" r="6" />
-              <circle class="node" cx="320" cy="150" r="8" />
-              <circle class="node" cx="320" cy="250" r="8" />
-            </g>
-          </svg>
-        </div>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <NightGrid />
+    <div class="wrap hero-content">
+      <p class="eyebrow hero-eyebrow">ML Partners, LLC · Proprietary Energy Trading</p>
+      <h1 class="hero-title display-xl">
+        Every light<br />is a node.<br />
+        <span class="hero-accent">Every node<br />is a price.</span>
+      </h1>
+      <p class="hero-sub">
+        A proprietary trading firm in MISO's wholesale power markets — certified
+        market participant since 2008. We trade day-ahead against real-time across
+        2,546 pricing nodes, guided by machine-learning models built and trained in-house.
+      </p>
+      <div class="hero-cta">
+        <a href="#desk" class="btn btn-solid">How We Trade</a>
+        <a href="/contact" class="btn btn-ghost">Contact the Desk</a>
       </div>
     </div>
-  </section>
 
-  <!-- Featured Project Section -->
-  <section id="projects" class="section-padding">
-    <div class="container">
-      <div class="text-center mb-5 fade-in">
-        <h2 class="display-5 fw-bold">Featured Project</h2>
-        <p class="lead text-muted">Production ML system for energy market trading</p>
-      </div>
-
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="card project-card fade-in">
-            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
-              <div>
-                <h3 class="h4 mb-1 fw-bold">MISO Energy Trading Platform</h3>
-                <p class="mb-0 opacity-75">Virtual Trading &amp; ML Forecasting System</p>
-              </div>
-              <a href="https://mlpartnership.com/miso/" target="_blank" rel="noopener" class="btn btn-light btn-sm">
-                <i class="bi bi-box-arrow-up-right me-1"></i> Live Dashboard
-              </a>
-            </div>
-            <div class="card-body p-4">
-              <p class="text-muted mb-4">
-                A production-grade energy trading platform combining real-time data collection,
-                LSTM neural network forecasting, graph network analysis, and automated trading
-                strategies for the MISO wholesale energy market. Processes 59M+ pricing records
-                across 2,546 nodes.
-              </p>
-
-              <h5 class="fw-bold mb-3">Key Achievements</h5>
-              <div class="row g-3 mb-4">
-                <div class="col-md-6 col-lg-3">
-                  <div class="d-flex align-items-start">
-                    <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
-                    <div>
-                      <strong>LSTM Forecasting</strong>
-                      <p class="text-muted small mb-0">359K parameter model, 70.5% win rate, 7-day price predictions</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="d-flex align-items-start">
-                    <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
-                    <div>
-                      <strong>High-Performance ETL</strong>
-                      <p class="text-muted small mb-0">70x faster data collection via async HTTP/2 and parallel processing</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="d-flex align-items-start">
-                    <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
-                    <div>
-                      <strong>Graph Analytics</strong>
-                      <p class="text-muted small mb-0">DuckPGQ with 2,546 vertices, 623K edges for constraint propagation</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                  <div class="d-flex align-items-start">
-                    <i class="bi bi-check-circle-fill text-primary me-2 mt-1"></i>
-                    <div>
-                      <strong>Multi-Agent Orchestration</strong>
-                      <p class="text-muted small mb-0">LLM routing with 60-80% cost savings via intelligent provider selection</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <h5 class="fw-bold mb-3">Technologies</h5>
-              <div class="mb-0">
-                {technologies.map(tech => (
-                  <span class="tech-badge">{tech}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section id="services" class="section-padding bg-light">
-    <div class="container">
-      <div class="text-center mb-5 fade-in">
-        <h2 class="display-5 fw-bold">Technical Expertise</h2>
-        <p class="lead text-muted">End-to-end ML engineering capabilities</p>
-      </div>
-      <div class="row g-4">
-        {services.map((service, index) => (
-          <div class={`col-md-6 col-lg-3 fade-in fade-in-delay-${index + 1}`}>
-            <div class="card service-card h-100 p-4 text-center">
-              <div class="icon-box bg-gradient-primary text-white mx-auto mb-4">
-                <i class={`bi ${service.icon}`}></i>
-              </div>
-              <h5 class="fw-bold">{service.title}</h5>
-              <p class="text-muted mb-0">{service.description}</p>
-            </div>
+    <div class="hero-stats">
+      <div class="wrap hero-stats-row">
+        {heroStats.map(s => (
+          <div class="hero-stat">
+            <div class="hero-stat-value">{s.value}</div>
+            <div class="hero-stat-label">{s.label}</div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section id="about" class="section-padding">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 mb-4 mb-lg-0 fade-in">
-          <h2 class="display-5 fw-bold mb-4">About ML Partners, LLC</h2>
-          <p class="lead text-muted mb-4">
-            Certified MISO market participant since 2008, now combining 17+ years of energy trading
-            experience with modern machine learning engineering.
-          </p>
-          <p class="text-muted mb-4">
-            Originally established as ML Partnership LLC, we have maintained active certification
-            in MISO's wholesale energy markets with a clean regulatory record. Today, we leverage
-            deep market expertise alongside production ML systems to build data-driven trading
-            platforms and analytics solutions.
-          </p>
-          <div class="row g-3">
-            {expertise.map(item => (
-              <div class="col-6">
-                <div class="d-flex align-items-center">
-                  <i class={`bi ${item.icon} text-primary me-2 fs-5`}></i>
-                  <span>{item.title}</span>
-                </div>
-              </div>
-            ))}
+  <!-- ============ TICKER ============ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      {[0, 1].map(() => (
+        tickerItems.map(([hub, tag]) => (
+          <span><b>{hub}</b> · {tag}</span>
+        ))
+      ))}
+    </div>
+  </div>
+
+  <!-- ============ 01 THE DESK ============ -->
+  <section id="desk" class="sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-index">/ 01</span>
+        <h2 class="sec-title">The Desk</h2>
+        <span class="sec-rule"></span>
+      </div>
+      <p class="lede reveal">
+        No clients. No fund. No services for sale. ML Partners trades its own book
+        in MISO's wholesale electricity markets — and has since 2008.
+      </p>
+      <div class="desk-grid">
+        {deskPanels.map((p, i) => (
+          <div class={`panel reveal reveal-d${i + 1}`}>
+            <div class="panel-index">/ {p.index}</div>
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
           </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 THE EDGE ============ -->
+  <section id="edge" class="sec sec-alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-index">/ 02</span>
+        <h2 class="sec-title">The Edge</h2>
+        <span class="sec-rule"></span>
+      </div>
+      <div class="edge-grid">
+        <div class="reveal">
+          <p class="lede">
+            Everything from data ingestion to order placement runs on
+            infrastructure written in-house.
+          </p>
         </div>
-        <div class="col-lg-6 fade-in fade-in-delay-2">
-          <div class="bg-gradient-primary rounded-4 p-5 text-white">
-            <div class="row text-center g-4">
-              <div class="col-6">
-                <h3 class="display-4 fw-bold">70x</h3>
-                <p class="mb-0 opacity-75">Performance Gains</p>
-              </div>
-              <div class="col-6">
-                <h3 class="display-4 fw-bold">59M+</h3>
-                <p class="mb-0 opacity-75">Records Processed</p>
-              </div>
-              <div class="col-6">
-                <h3 class="display-4 fw-bold">264</h3>
-                <p class="mb-0 opacity-75">Automated Tests</p>
-              </div>
-              <div class="col-6">
-                <h3 class="display-4 fw-bold">99.9%</h3>
-                <p class="mb-0 opacity-75">System Uptime</p>
-              </div>
+        <div class="edge-stats reveal reveal-d1">
+          {edgeStats.map(s => (
+            <div class="edge-stat">
+              <div class="stat-value">{s.value}</div>
+              <div class="stat-label">{s.label}</div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="section-padding bg-light">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center fade-in">
-          <h2 class="display-5 fw-bold mb-4">Get in Touch</h2>
-          <p class="lead text-muted mb-5">
-            Interested in ML engineering for your project? Let's discuss.
-          </p>
-          <div class="card border-0 shadow-lg p-4 p-md-5">
-            <div class="row g-4">
-              <div class="col-md-4">
-                <div class="text-center">
-                  <i class="bi bi-envelope-fill fs-1 text-primary mb-3"></i>
-                  <h6 class="fw-bold">Email</h6>
-                  <a href="mailto:nduong@mlpartnersllc.com" class="text-muted text-decoration-none">
-                    nduong@mlpartnersllc.com
-                  </a>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="text-center">
-                  <i class="bi bi-geo-alt-fill fs-1 text-primary mb-3"></i>
-                  <h6 class="fw-bold">Location</h6>
-                  <p class="text-muted mb-0">United States</p>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="text-center">
-                  <i class="bi bi-github fs-1 text-primary mb-3"></i>
-                  <h6 class="fw-bold">GitHub</h6>
-                  <a href="https://github.com/nduong2000" class="text-muted text-decoration-none" target="_blank" rel="noopener">
-                    View Projects
-                  </a>
-                </div>
-              </div>
-            </div>
+  <!-- ============ 03 THE FOOTPRINT ============ -->
+  <section id="footprint" class="sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-index">/ 03</span>
+        <h2 class="sec-title">The Footprint</h2>
+        <span class="sec-rule"></span>
+      </div>
+      <p class="lede reveal">
+        MISO — the Midcontinent Independent System Operator — runs the wholesale
+        power market for the middle of America, from the Canadian border to the
+        Gulf of Mexico. That map of lights is where we work. Coverage extends to
+        the neighboring Southwest Power Pool.
+      </p>
+      <div class="footprint-grid reveal reveal-d1">
+        {footprintStats.map(s => (
+          <div class="footprint-stat">
+            <div class="stat-value">{s.value}</div>
+            <div class="stat-label">{s.label}</div>
           </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 THE RECORD ============ -->
+  <section id="record" class="sec sec-alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-index">/ 04</span>
+        <h2 class="sec-title">The Record</h2>
+        <span class="sec-rule"></span>
+      </div>
+      <div class="record-grid">
+        <div class="reveal">
+          <p class="lede">
+            Eighteen years in the market. One clean regulatory record.
+          </p>
+          <p class="edge-copy">
+            Originally chartered as ML Partnership LLC, the firm has held
+            continuous MISO market certification since 2008 — through the polar
+            vortex, through Winter Storm Uri, through every shape the market has
+            thrown at it. We answer to our own capital and nobody else's.
+          </p>
         </div>
+        <dl class="registry panel reveal reveal-d1">
+          {registry.map(r => (
+            <div class="registry-row">
+              <dt>{r.key}</dt>
+              <dd>{r.val}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 CONTACT ============ -->
+  <section id="contact" class="sec">
+    <div class="wrap contact-wrap">
+      <div class="sec-head reveal">
+        <span class="sec-index">/ 05</span>
+        <h2 class="sec-title">Contact</h2>
+        <span class="sec-rule"></span>
+      </div>
+      <div class="contact-box reveal">
+        <p class="lede">
+          We don't take clients or outside capital — but if you're a market
+          participant, counterparty, or data provider, the inbox is open.
+        </p>
+        <a href="/contact" class="btn btn-solid">Message the Desk</a>
       </div>
     </div>
   </section>
 
   <Footer />
 </BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-eyebrow {
+    margin-bottom: 1.6rem;
+    animation: rise 0.8s cubic-bezier(0.2, 0.6, 0.2, 1) both 0.1s;
+  }
+
+  .hero-title {
+    font-size: clamp(2.6rem, 7.2vw, 6rem);
+    animation: rise 0.9s cubic-bezier(0.2, 0.6, 0.2, 1) both 0.25s;
+  }
+
+  .hero-accent {
+    color: var(--amber);
+    text-shadow: 0 0 48px rgba(255, 180, 84, 0.4);
+  }
+
+  .hero-sub {
+    max-width: 560px;
+    color: var(--muted);
+    font-size: 1.02rem;
+    margin: 1.8rem 0 2.2rem;
+    animation: rise 0.9s cubic-bezier(0.2, 0.6, 0.2, 1) both 0.45s;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: rise 0.9s cubic-bezier(0.2, 0.6, 0.2, 1) both 0.6s;
+  }
+
+  .hero-stats {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--line);
+    background: rgba(5, 9, 16, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: fade 1s ease both 0.85s;
+  }
+
+  .hero-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .hero-stat {
+    padding: 1.3rem 1.2rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .hero-stat:last-child { border-right: 1px solid var(--line); }
+
+  .hero-stat-value {
+    font-variation-settings: 'wdth' 116;
+    font-weight: 820;
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.45rem;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ---- Shared section bits ---- */
+  .lede {
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    font-weight: 460;
+    line-height: 1.45;
+    max-width: 760px;
+    margin-bottom: 2.8rem;
+    color: var(--ink);
+  }
+
+  .edge-copy {
+    color: var(--muted);
+    font-size: 0.97rem;
+    max-width: 560px;
+  }
+
+  /* ---- Desk ---- */
+  .desk-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* ---- Edge ---- */
+  .edge-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .edge-grid .lede { margin-bottom: 1.4rem; }
+
+  .edge-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .edge-stat {
+    border: 1px solid var(--line);
+    margin: 0 -1px -1px 0;
+    padding: 1.8rem 1.5rem;
+  }
+
+  /* ---- Footprint ---- */
+  .footprint-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--line);
+  }
+
+  .footprint-stat {
+    padding: 2.2rem 1.6rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .footprint-stat:first-child { border-left: none; }
+
+  /* ---- Record ---- */
+  .record-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .record-grid .lede { margin-bottom: 1.4rem; }
+
+  .registry {
+    margin: 0;
+    padding: 0.6rem 1.75rem;
+  }
+
+  .registry-row {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 1rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .registry-row:last-child { border-bottom: none; }
+
+  .registry dt {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.2rem;
+  }
+
+  .registry dd {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ink);
+  }
+
+  /* ---- Contact ---- */
+  .contact-box {
+    text-align: left;
+  }
+
+  .contact-box .lede { margin-bottom: 2rem; }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 960px) {
+    .desk-grid { grid-template-columns: 1fr; }
+    .edge-grid, .record-grid { grid-template-columns: 1fr; }
+    .footprint-grid { grid-template-columns: 1fr 1fr; }
+    .footprint-stat { border-top: 1px solid var(--line); }
+    .footprint-stat:nth-child(-n+2) { border-top: none; }
+    .footprint-stat:nth-child(odd) { border-left: none; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats-row { grid-template-columns: 1fr 1fr; }
+    .hero-stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .hero-stat:nth-child(even) { border-right: 1px solid var(--line); }
+    .registry-row { grid-template-columns: 1fr; gap: 0.2rem; }
+  }
+</style>

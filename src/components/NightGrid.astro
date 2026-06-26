@@ -1,0 +1,429 @@
+<div class="nightgrid-holder" aria-hidden="true">
+  <canvas id="nightgrid"></canvas>
+  <div class="nightgrid-vignette"></div>
+</div>
+
+<style>
+  .nightgrid-holder {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  #nightgrid {
+    width: 100%;
+    height: 100%;
+  }
+
+  .nightgrid-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 110% 90% at 50% 38%, transparent 40%, rgba(5, 9, 16, 0.85) 100%),
+      linear-gradient(180deg, rgba(5, 9, 16, 0.55) 0%, transparent 22%, transparent 55%, rgba(5, 9, 16, 0.92) 100%);
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('nightgrid') as HTMLCanvasElement | null;
+
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Simplified lower-48 coastline/border, [lon, lat], traced clockwise.
+    // Northern path hugs the US shore of the Great Lakes so the lakes stay dark.
+    const US: [number, number][] = [
+      [-124.7, 48.4], [-124.6, 47.4], [-124.1, 46.9], [-123.9, 46.2], [-124.0, 45.5],
+      [-124.0, 44.6], [-124.4, 43.4], [-124.2, 42.0], [-124.3, 40.4], [-123.8, 39.4],
+      [-122.9, 38.3], [-122.5, 37.8], [-121.9, 36.6], [-120.6, 34.6], [-119.7, 34.4],
+      [-118.4, 33.7], [-117.3, 33.0], [-117.1, 32.5], [-114.7, 32.7], [-111.0, 31.3],
+      [-108.2, 31.3], [-108.2, 31.8], [-106.5, 31.8], [-104.9, 30.6], [-104.0, 29.3],
+      [-102.4, 29.8], [-101.4, 29.8], [-100.0, 28.2], [-99.1, 26.4], [-97.1, 25.9],
+      [-97.4, 27.3], [-96.4, 28.4], [-94.9, 29.3], [-93.8, 29.7], [-92.2, 29.5],
+      [-90.2, 29.1], [-89.4, 29.0], [-89.4, 30.0], [-88.8, 30.4], [-88.0, 30.2],
+      [-86.5, 30.4], [-85.4, 29.7], [-84.4, 29.9], [-83.0, 29.1], [-82.7, 27.9],
+      [-81.8, 26.4], [-81.1, 25.1], [-80.35, 25.15], [-80.05, 25.85], [-80.0, 26.8], [-80.5, 28.5],
+      [-81.4, 30.7], [-80.8, 32.0], [-78.9, 33.8], [-77.9, 34.1], [-75.5, 35.2],
+      [-76.0, 36.9], [-75.0, 38.8], [-74.0, 40.5], [-72.3, 41.0], [-71.9, 41.3],
+      [-70.0, 41.7], [-70.8, 42.7], [-70.6, 43.8], [-68.7, 44.4], [-66.95, 44.8],
+      [-67.8, 47.1], [-69.2, 47.46], [-70.9, 45.3], [-74.7, 45.0], [-76.4, 44.1],
+      [-77.6, 43.4], [-79.0, 43.3], [-78.9, 42.9], [-80.1, 42.2], [-81.7, 41.5],
+      [-83.5, 41.7], [-83.1, 42.3], [-82.4, 43.0], [-83.9, 43.7], [-83.3, 44.3],
+      [-83.4, 45.1], [-84.5, 45.7], [-84.7, 45.9], [-84.4, 46.5], [-85.0, 46.7],
+      [-86.7, 46.5], [-87.4, 46.6], [-88.0, 47.2], [-88.9, 46.8], [-90.8, 46.6],
+      [-92.1, 46.8], [-91.0, 47.3], [-89.9, 47.8], [-89.6, 48.0], [-90.8, 48.1],
+      [-92.0, 48.4], [-93.4, 48.6], [-94.6, 48.7], [-95.15, 49.0], [-124.7, 49.0]
+    ];
+
+    // Lake Michigan punched out as a hole so the "mitten" reads.
+    const LAKE_MI: [number, number][] = [
+      [-85.0, 45.75], [-85.4, 45.0], [-86.0, 44.4], [-86.4, 43.3], [-86.3, 42.3],
+      [-86.6, 41.7], [-87.5, 41.7], [-87.85, 42.4], [-87.8, 43.4], [-87.3, 44.4],
+      [-86.9, 45.2], [-86.3, 45.7]
+    ];
+
+    // Stylized MISO footprint (Midwest block + South region corridor).
+    const MISO: [number, number][] = [
+      [-105.5, 49.0], [-89.0, 49.0], [-84.0, 46.8], [-82.3, 43.0], [-83.2, 41.8],
+      [-84.8, 41.7], [-84.8, 39.1], [-86.3, 38.0], [-88.1, 37.0], [-89.7, 36.5],
+      [-90.3, 35.2], [-88.4, 35.0], [-88.4, 30.3], [-94.0, 29.7], [-96.0, 30.5],
+      [-95.0, 32.0], [-94.4, 33.6], [-94.6, 36.5], [-93.5, 36.8], [-93.8, 40.6],
+      [-96.6, 42.5], [-97.0, 42.9], [-100.5, 45.9], [-105.5, 48.0]
+    ];
+
+    // City lights: [lon, lat, weight]
+    const CITIES: [number, number, number][] = [
+      [-74.0, 40.71, 1.0], [-118.24, 34.05, 1.0], [-87.63, 41.88, 0.95],
+      [-95.36, 29.76, 0.85], [-112.07, 33.45, 0.7], [-75.16, 39.95, 0.75],
+      [-98.49, 29.42, 0.6], [-96.8, 32.78, 0.85], [-97.74, 30.27, 0.6],
+      [-122.27, 37.7, 0.85], [-122.33, 47.6, 0.7], [-104.99, 39.74, 0.7],
+      [-77.04, 38.9, 0.8], [-71.06, 42.36, 0.75], [-84.39, 33.75, 0.8],
+      [-80.19, 25.76, 0.8], [-82.46, 27.95, 0.55], [-81.4, 28.5, 0.55],
+      [-93.27, 44.98, 0.8], [-83.05, 42.33, 0.8], [-90.2, 38.63, 0.7],
+      [-94.58, 39.1, 0.6], [-86.16, 39.77, 0.65], [-83.0, 39.96, 0.6],
+      [-81.69, 41.5, 0.6], [-84.51, 39.1, 0.5], [-87.91, 43.04, 0.6],
+      [-86.78, 36.16, 0.55], [-90.05, 35.15, 0.5], [-90.07, 29.95, 0.6],
+      [-91.15, 30.45, 0.45], [-92.29, 34.75, 0.45], [-97.52, 35.47, 0.5],
+      [-95.93, 41.26, 0.5], [-93.62, 41.59, 0.45], [-80.84, 35.23, 0.55],
+      [-78.64, 35.78, 0.5], [-79.99, 40.44, 0.55], [-78.88, 42.89, 0.4],
+      [-111.89, 40.76, 0.5], [-115.14, 36.17, 0.65], [-122.68, 45.52, 0.6],
+      [-121.49, 38.58, 0.5], [-117.16, 32.72, 0.65], [-106.65, 35.08, 0.4],
+      [-106.49, 31.76, 0.4], [-81.66, 30.33, 0.5], [-85.76, 38.25, 0.45],
+      [-86.8, 33.52, 0.4], [-77.44, 37.54, 0.4], [-96.79, 46.88, 0.32],
+      [-96.7, 43.55, 0.32], [-97.34, 37.69, 0.4], [-95.99, 36.15, 0.4],
+      [-89.4, 43.07, 0.4], [-85.66, 42.96, 0.4], [-92.1, 46.79, 0.3],
+      [-89.65, 39.8, 0.32], [-91.67, 41.98, 0.3], [-100.78, 46.81, 0.24],
+      [-108.5, 45.78, 0.28], [-116.2, 43.62, 0.38], [-117.43, 47.66, 0.32],
+      [-119.77, 36.75, 0.4], [-90.18, 32.3, 0.35], [-88.04, 30.69, 0.32],
+      [-93.75, 32.52, 0.32], [-83.92, 35.96, 0.38], [-87.57, 37.97, 0.3],
+      [-84.55, 42.73, 0.35], [-94.1, 30.08, 0.3], [-101.85, 33.58, 0.28],
+      [-97.33, 32.75, 0.6], [-82.0, 26.6, 0.4], [-110.93, 32.22, 0.4]
+    ];
+
+    // MISO hub markers (stylized commercial hub locations).
+    const HUBS: { n: string; c: [number, number] }[] = [
+      { n: 'MINN.HUB', c: [-93.27, 44.98] },
+      { n: 'MICH.HUB', c: [-84.55, 42.73] },
+      { n: 'ILLINOIS.HUB', c: [-89.65, 39.8] },
+      { n: 'INDIANA.HUB', c: [-86.16, 39.77] },
+      { n: 'ARKANSAS.HUB', c: [-92.29, 34.75] },
+      { n: 'MS.HUB', c: [-90.18, 32.3] },
+      { n: 'LOUISIANA.HUB', c: [-91.15, 30.45] },
+      { n: 'TEXAS.HUB', c: [-94.1, 30.08] }
+    ];
+
+    // Stylized transmission paths between MISO nodes, [ [lon,lat], [lon,lat] ]
+    const P: Record<string, [number, number]> = {
+      bis: [-100.78, 46.81], fgo: [-96.79, 46.88], dul: [-92.1, 46.79],
+      msp: [-93.27, 44.98], sf: [-96.7, 43.55], dsm: [-93.62, 41.59],
+      mad: [-89.4, 43.07], mke: [-87.91, 43.04], cr: [-91.67, 41.98],
+      spi: [-89.65, 39.8], stl: [-90.2, 38.63], ind: [-86.16, 39.77],
+      lan: [-84.55, 42.73], det: [-83.05, 42.33], grr: [-85.66, 42.96],
+      evv: [-87.57, 37.97], mem: [-90.05, 35.15], lit: [-92.29, 34.75],
+      jan: [-90.18, 32.3], btr: [-91.15, 30.45], msy: [-90.07, 29.95],
+      bpt: [-94.1, 30.08]
+    };
+
+    const EDGES: [string, string][] = [
+      ['bis', 'fgo'], ['fgo', 'msp'], ['dul', 'msp'], ['msp', 'sf'],
+      ['sf', 'dsm'], ['msp', 'mad'], ['mad', 'mke'], ['mke', 'grr'],
+      ['grr', 'lan'], ['lan', 'det'], ['dsm', 'cr'], ['cr', 'mad'],
+      ['cr', 'spi'], ['dsm', 'stl'], ['spi', 'stl'], ['spi', 'ind'],
+      ['ind', 'lan'], ['ind', 'evv'], ['evv', 'stl'], ['stl', 'lit'],
+      ['mem', 'lit'], ['lit', 'jan'], ['mem', 'jan'], ['jan', 'btr'],
+      ['btr', 'msy'], ['btr', 'bpt'], ['lit', 'bpt']
+    ];
+
+    const LON0 = -125.5, LON1 = -66.0, LAT0 = 24.2, LAT1 = 49.8;
+    const ASPECT = ((LON1 - LON0) * Math.cos((37.5 * Math.PI) / 180)) / (LAT1 - LAT0);
+
+    let W = 0, H = 0, DPR = 1;
+    let mapW = 0, mapH = 0, offX = 0, offY = 0;
+    let staticLayer: HTMLCanvasElement | null = null;
+    let twinkles: { x: number; y: number; r: number; a: number; phase: number; speed: number; col: string }[] = [];
+    let pulses: { x1: number; y1: number; cx: number; cy: number; x2: number; y2: number; offset: number; dur: number }[] = [];
+    let rafId = 0;
+    let running = false;
+
+    const px = (lon: number, lat: number): [number, number] => [
+      offX + ((lon - LON0) / (LON1 - LON0)) * mapW,
+      offY + ((LAT1 - lat) / (LAT1 - LAT0)) * mapH
+    ];
+
+    const unpx = (x: number, y: number): [number, number] => [
+      LON0 + ((x - offX) / mapW) * (LON1 - LON0),
+      LAT1 - ((y - offY) / mapH) * (LAT1 - LAT0)
+    ];
+
+    function inPoly(p: [number, number], poly: [number, number][]) {
+      let inside = false;
+      for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+        const a = poly[i], b = poly[j];
+        if ((a[1] > p[1]) !== (b[1] > p[1]) &&
+            p[0] < ((b[0] - a[0]) * (p[1] - a[1])) / (b[1] - a[1]) + a[0]) {
+          inside = !inside;
+        }
+      }
+      return inside;
+    }
+
+    // Deterministic pseudo-random so rebuilds look identical
+    function makeRng(seed: number) {
+      let s = seed;
+      return () => {
+        s = (s * 1664525 + 1013904223) % 4294967296;
+        return s / 4294967296;
+      };
+    }
+
+    function build() {
+      const holder = canvas.parentElement!;
+      W = holder.clientWidth;
+      H = holder.clientHeight;
+      if (!W || !H) return;
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = W * DPR;
+      canvas.height = H * DPR;
+
+      // Fit map into hero, biased toward upper area (text sits low-left)
+      mapW = Math.min(W * 1.04, H * 0.92 * ASPECT);
+      mapH = mapW / ASPECT;
+      offX = (W - mapW) / 2 + W * 0.02;
+      offY = (H - mapH) * 0.36;
+
+      const rng = makeRng(20080101);
+      const cityPx = CITIES.map(([lon, lat, w]) => {
+        const [x, y] = px(lon, lat);
+        return { x, y, w, sigma: (6 + w * 24) * (mapW / 1100) };
+      });
+
+      twinkles = [];
+      const dots: { x: number; y: number; r: number; a: number; col: string; b: number }[] = [];
+      const step = Math.max(4.2, mapW / 230);
+
+      for (let y = offY; y < offY + mapH; y += step) {
+        for (let x = offX; x < offX + mapW; x += step) {
+          const jx = x + (rng() - 0.5) * step * 0.9;
+          const jy = y + (rng() - 0.5) * step * 0.9;
+          const ll = unpx(jx, jy);
+          if (!inPoly(ll, US) || inPoly(ll, LAKE_MI)) continue;
+
+          let b = 0.045;
+          for (const c of cityPx) {
+            const dx = jx - c.x, dy = jy - c.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < c.sigma * c.sigma * 9) {
+              b += c.w * Math.exp(-d2 / (2 * c.sigma * c.sigma));
+            }
+          }
+          b = Math.min(b, 1);
+          // Thin out the dimmest rural dots for organic texture
+          if (b < 0.1 && rng() < 0.45) continue;
+          b *= 0.72 + rng() * 0.45;
+          b = Math.min(b, 1);
+
+          const miso = inPoly(ll, MISO);
+          const col = miso
+            ? `rgba(255, ${Math.round(176 + b * 50)}, ${Math.round(96 + b * 70)}, `
+            : `rgba(${Math.round(140 + b * 60)}, ${Math.round(165 + b * 55)}, ${Math.round(205 + b * 30)}, `;
+
+          const dot = {
+            x: jx, y: jy,
+            r: 0.55 + b * 1.5,
+            a: (miso ? 0.16 : 0.09) + b * (miso ? 0.8 : 0.5),
+            col, b
+          };
+          dots.push(dot);
+          if (b > 0.3 && twinkles.length < 400 && rng() < 0.5) {
+            twinkles.push({
+              x: dot.x, y: dot.y, r: dot.r, a: dot.a, col,
+              phase: rng() * Math.PI * 2,
+              speed: 0.6 + rng() * 1.6
+            });
+          }
+        }
+      }
+
+      // ---- Static layer ----
+      staticLayer = document.createElement('canvas');
+      staticLayer.width = W * DPR;
+      staticLayer.height = H * DPR;
+      const s = staticLayer.getContext('2d')!;
+      s.scale(DPR, DPR);
+
+      // Deep-space atmosphere behind the continent
+      const atmo = s.createRadialGradient(
+        offX + mapW * 0.55, offY + mapH * 0.45, mapH * 0.1,
+        offX + mapW * 0.55, offY + mapH * 0.45, mapW * 0.62
+      );
+      atmo.addColorStop(0, 'rgba(20, 36, 66, 0.5)');
+      atmo.addColorStop(0.6, 'rgba(10, 20, 40, 0.28)');
+      atmo.addColorStop(1, 'rgba(5, 9, 16, 0)');
+      s.fillStyle = atmo;
+      s.fillRect(0, 0, W, H);
+
+      // City glow blooms (the NASA photo look)
+      s.globalCompositeOperation = 'lighter';
+      for (const c of cityPx) {
+        if (c.w < 0.35) continue;
+        const ll = unpx(c.x, c.y);
+        const miso = inPoly(ll, MISO);
+        const R = c.sigma * 3.1;
+        const g = s.createRadialGradient(c.x, c.y, 0, c.x, c.y, R);
+        const core = miso ? '255, 180, 100' : '150, 180, 220';
+        g.addColorStop(0, `rgba(${core}, ${0.13 * c.w + 0.04})`);
+        g.addColorStop(0.5, `rgba(${core}, ${0.05 * c.w})`);
+        g.addColorStop(1, `rgba(${core}, 0)`);
+        s.fillStyle = g;
+        s.beginPath();
+        s.arc(c.x, c.y, R, 0, Math.PI * 2);
+        s.fill();
+      }
+      s.globalCompositeOperation = 'source-over';
+
+      // The light dots (skip twinkle subset — they're drawn per-frame)
+      const twinkleSet = new Set(twinkles.map(t => t.x * 10000 + t.y));
+      for (const d of dots) {
+        if (twinkleSet.has(d.x * 10000 + d.y)) continue;
+        s.fillStyle = d.col + d.a.toFixed(3) + ')';
+        s.beginPath();
+        s.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        s.fill();
+      }
+
+      // MISO footprint boundary
+      s.strokeStyle = 'rgba(255, 180, 84, 0.28)';
+      s.lineWidth = 1;
+      s.setLineDash([5, 7]);
+      s.beginPath();
+      MISO.forEach((ll, i) => {
+        const [x, y] = px(ll[0], ll[1]);
+        i === 0 ? s.moveTo(x, y) : s.lineTo(x, y);
+      });
+      s.closePath();
+      s.stroke();
+      s.setLineDash([]);
+
+      // Transmission paths (faint static traces)
+      s.strokeStyle = 'rgba(255, 190, 110, 0.13)';
+      s.lineWidth = 1;
+      pulses = [];
+      EDGES.forEach(([a, b], i) => {
+        const [x1, y1] = px(P[a][0], P[a][1]);
+        const [x2, y2] = px(P[b][0], P[b][1]);
+        const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+        const dx = x2 - x1, dy = y2 - y1;
+        const len = Math.hypot(dx, dy) || 1;
+        const bend = len * 0.13 * (i % 2 === 0 ? 1 : -1);
+        const cx = mx - (dy / len) * bend;
+        const cy = my + (dx / len) * bend;
+        s.beginPath();
+        s.moveTo(x1, y1);
+        s.quadraticCurveTo(cx, cy, x2, y2);
+        s.stroke();
+        pulses.push({
+          x1, y1, cx, cy, x2, y2,
+          offset: (i * 0.37) % 1,
+          dur: 6 + (i % 5) * 1.7
+        });
+      });
+
+      // Hub markers + labels
+      const showLabels = W >= 720;
+      s.font = `500 ${Math.max(9, mapW / 120)}px "IBM Plex Mono", monospace`;
+      for (const hub of HUBS) {
+        const [x, y] = px(hub.c[0], hub.c[1]);
+        s.save();
+        s.translate(x, y);
+        s.rotate(Math.PI / 4);
+        s.strokeStyle = 'rgba(255, 217, 160, 0.9)';
+        s.lineWidth = 1;
+        s.strokeRect(-2.6, -2.6, 5.2, 5.2);
+        s.restore();
+        if (showLabels) {
+          s.fillStyle = 'rgba(255, 217, 160, 0.62)';
+          s.fillText(hub.n, x + 7, y - 6);
+        }
+      }
+
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      if (REDUCED) {
+        drawFrame(0);
+      }
+    }
+
+    function drawFrame(t: number) {
+      if (!staticLayer) return;
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(staticLayer, 0, 0, W, H);
+
+      // Twinkling lights
+      for (const tw of twinkles) {
+        const mod = 0.55 + 0.45 * Math.sin(t * 0.001 * tw.speed + tw.phase);
+        ctx.fillStyle = tw.col + (tw.a * mod).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(tw.x, tw.y, tw.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (REDUCED) return;
+
+      // Energy pulses along transmission paths
+      ctx.globalCompositeOperation = 'lighter';
+      for (const p of pulses) {
+        const u = ((t / (p.dur * 1000)) + p.offset) % 1;
+        const v = 1 - u;
+        const x = v * v * p.x1 + 2 * v * u * p.cx + u * u * p.x2;
+        const y = v * v * p.y1 + 2 * v * u * p.cy + u * u * p.y2;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, 7);
+        g.addColorStop(0, 'rgba(255, 224, 170, 0.9)');
+        g.addColorStop(0.35, 'rgba(255, 180, 84, 0.35)');
+        g.addColorStop(1, 'rgba(255, 180, 84, 0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, 7, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function loop(t: number) {
+      if (!running) return;
+      drawFrame(t);
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function start() {
+      if (running || REDUCED) return;
+      running = true;
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function stop() {
+      running = false;
+      cancelAnimationFrame(rafId);
+    }
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        build();
+        if (REDUCED) drawFrame(0);
+      }, 160);
+    }).observe(canvas.parentElement!);
+
+    new IntersectionObserver((entries) => {
+      entries[0].isIntersecting ? start() : stop();
+    }).observe(canvas);
+
+    document.addEventListener('visibilitychange', () => {
+      document.hidden ? stop() : start();
+    });
+
+    build();
+    if (REDUCED) drawFrame(0); else start();
+  }
+</script>

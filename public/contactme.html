@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ML Partners, LLC - Encrypted Upload">
+    <meta name="referrer" content="no-referrer">
+    <title>Encrypted Upload - ML Partners, LLC</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/js/age-bundle.js"
+            integrity="sha384-C9GQB9KJdz7IWaUGC3jZzXlU5iXTPods9xmN4xxrMWPTC3rWQiaECye9phnJ1/6P"
+            crossorigin="anonymous"></script>
+    <style>
+        .upload-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding-top: 80px; background: linear-gradient(180deg, #0b0f1a 0%, #1a1f36 100%); }
+        .upload-container { background: white; padding: 2.5rem; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); max-width: 720px; width: 100%; margin: 2rem; }
+        .upload-header { text-align: center; margin-bottom: 1.5rem; }
+        .upload-header h2 { background: linear-gradient(135deg, #1a1f36 0%, #16a34a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.4rem; }
+        .upload-header .sub { color: #5a6478; font-size: 0.95rem; }
+        .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px; background: rgba(22,163,74,0.1); color: #166534; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+        .panel { background: #fafbff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; font-size: 0.9rem; color: #1a1f36; }
+        .panel h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: #5a6478; margin: 0 0 0.5rem 0; }
+        .panel p { margin: 0; line-height: 1.5; }
+        .panel .small { font-size: 0.8rem; color: #5a6478; margin-top: 0.5rem; }
+        .key-row { display: flex; gap: 0.5rem; align-items: center; }
+        .key-row code { flex: 1; font-family: 'SF Mono', Monaco, monospace; font-size: 0.78rem; background: #0b0f1a; color: #a5f3a8; padding: 0.55rem 0.75rem; border-radius: 8px; word-break: break-all; user-select: all; }
+        .copy-btn { background: #1a1f36; color: white; border: none; padding: 0.5rem 0.85rem; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
+        .copy-btn:hover { background: #4f46e5; }
+        .lib-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: #5a6478; }
+        .lib-status .dot { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; }
+        .lib-status.ready .dot { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.15); }
+        .lib-status.fail .dot { background: #dc2626; }
+        .token-input { width: 100%; padding: 0.7rem 0.9rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: 'SF Mono', Monaco, monospace; font-size: 0.85rem; box-sizing: border-box; }
+        .token-input:focus { outline: none; border-color: #4f46e5; }
+        .drop-zone { border: 2px dashed rgba(22,163,74,0.4); border-radius: 16px; padding: 2.5rem 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease; background: #f0fdf4; margin: 1rem 0; }
+        .drop-zone:hover, .drop-zone.drag-over { border-color: #16a34a; background: rgba(22,163,74,0.08); }
+        .drop-zone-icon { width: 56px; height: 56px; margin: 0 auto 0.75rem; color: #16a34a; }
+        .drop-zone-text { color: #1a1f36; font-size: 1rem; margin-bottom: 0.3rem; font-weight: 500; }
+        .drop-zone-hint { color: #5a6478; font-size: 0.85rem; }
+        .file-input { display: none; }
+        .file-list { margin-bottom: 1rem; }
+        .file-item { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; background: #fafbff; border-radius: 10px; margin-bottom: 0.5rem; border: 1px solid rgba(0,0,0,0.05); }
+        .file-info { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 0; }
+        .file-icon { width: 36px; height: 36px; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: white; font-size: 0.65rem; font-weight: 700; }
+        .file-icon.pending { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .file-icon.bad { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
+        .file-name { font-weight: 500; color: #1a1f36; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .file-size { color: #5a6478; font-size: 0.78rem; }
+        .file-warn { color: #dc2626; font-size: 0.78rem; }
+        .file-remove { background: none; border: none; color: #a0aec0; cursor: pointer; padding: 0.4rem; }
+        .file-remove:hover { color: #e53e3e; }
+        .upload-actions { display: flex; gap: 0.75rem; }
+        .upload-actions .btn { flex: 1; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; font-size: 0.95rem; }
+        .btn-primary { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: white; }
+        .btn-primary:hover { opacity: 0.92; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-secondary { background: transparent; color: #5a6478; border: 1px solid rgba(0,0,0,0.1) !important; }
+        .upload-progress { display: none; margin: 1rem 0; }
+        .progress-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-bottom: 0.4rem; }
+        .progress-fill { height: 100%; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); width: 0%; transition: width 0.2s ease; }
+        .progress-text { color: #5a6478; font-size: 0.8rem; text-align: center; }
+        .upload-status { margin-top: 1rem; padding: 0.85rem 1rem; border-radius: 10px; display: none; font-size: 0.9rem; }
+        .upload-status.success { display: block; background: rgba(22,163,74,0.1); border: 1px solid rgba(22,163,74,0.3); color: #166534; }
+        .upload-status.error { display: block; background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.3); color: #991b1b; white-space: pre-wrap; }
+        @media (max-width: 768px) {
+            .upload-container { margin: 1rem; padding: 1.5rem; }
+            .upload-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <a href="/">ML<span>Partners, LLC</span></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="upload-section">
+        <div class="upload-container">
+            <div class="upload-header">
+                <h2>Upload</h2>
+            </div>
+
+            <div class="panel">
+                <h3>Access token</h3>
+                <div class="key-row">
+                    <input type="password" class="token-input" id="tokenInput" placeholder="Paste your upload token" autocomplete="off">
+                    <button class="copy-btn" type="button" id="clearTokenBtn">Clear token</button>
+                </div>
+                <p class="small">Stored only in this tab (sessionStorage). Cleared when you close it.</p>
+            </div>
+
+            <div class="drop-zone" id="dropZone">
+                <svg class="drop-zone-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <p class="drop-zone-text">Drop any file here or click to browse</p>
+                <p class="drop-zone-hint">Encryption happens in your browser. Files up to ~150 MB.</p>
+                <input type="file" class="file-input" id="fileInput" multiple>
+            </div>
+
+            <div class="file-list" id="fileList"></div>
+
+            <div class="upload-progress" id="uploadProgress">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <p class="progress-text" id="progressText">Working...</p>
+            </div>
+
+            <div class="upload-actions">
+                <button class="btn btn-secondary" id="clearBtn" type="button">Clear</button>
+                <button class="btn btn-primary" id="uploadBtn" type="button" disabled>Encrypt &amp; Upload</button>
+            </div>
+
+            <div class="upload-status" id="uploadStatus"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 ML Partners, LLC. | Encrypted Upload Channel</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const PUBKEY = 'age1n3kzhkw990m37el8as2ycjd0y5lkm7n6a40napm2jqxzl200uy8syme2uc';
+        const AGE_BINARY_MAGIC = 'age-encryption.org/v1\n';
+        const AGE_ARMORED_MAGIC = '-----BEGIN AGE ENCRYPTED FILE-----';
+
+        const $ = id => document.getElementById(id);
+        const dropZone = $('dropZone'), fileInput = $('fileInput'), fileList = $('fileList');
+        const uploadBtn = $('uploadBtn'), clearBtn = $('clearBtn');
+        const uploadProgress = $('uploadProgress'), progressFill = $('progressFill'), progressText = $('progressText');
+        const uploadStatus = $('uploadStatus'), tokenInput = $('tokenInput');
+        const libStatus = $('libStatus'), libStatusText = $('libStatusText');
+
+        // Detect that the age IIFE bundle loaded (SRI failure would leave window.age undefined)
+        if (typeof age !== 'undefined' && age && typeof age.Encrypter === 'function') {
+            if (libStatus) { libStatus.classList.add('ready'); libStatusText.textContent = 'age library loaded (self-hosted, SRI-verified)'; }
+            uploadBtn.disabled = false;
+        } else {
+            if (libStatus) { libStatus.classList.add('fail'); libStatusText.textContent = 'age library failed to load — upload disabled'; }
+        }
+
+        tokenInput.value = sessionStorage.getItem('uploadToken') || '';
+        tokenInput.addEventListener('input', () => sessionStorage.setItem('uploadToken', tokenInput.value));
+        $('clearTokenBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('uploadToken');
+            tokenInput.value = '';
+            tokenInput.focus();
+        });
+
+        let items = []; // { file: File, status: 'pending'|'encrypting'|'ready'|'error', cipherBlob?: Blob, outName?: string, error?: string }
+
+        async function detectAge(file) {
+            const head = await file.slice(0, 64).arrayBuffer();
+            const text = new TextDecoder('latin1').decode(head);
+            return text.startsWith(AGE_BINARY_MAGIC) || text.startsWith(AGE_ARMORED_MAGIC);
+        }
+
+        function fmtSize(b) {
+            if (b === 0) return '0 B';
+            const u = ['B','KB','MB','GB'], i = Math.floor(Math.log(b)/Math.log(1024));
+            return (b/Math.pow(1024,i)).toFixed(2) + ' ' + u[i];
+        }
+
+        function esc(s) {
+            return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function render() {
+            fileList.innerHTML = items.map((it, i) => {
+                let badge = 'AGE', cls = '', detail;
+                if (it.status === 'pending') { badge = '...'; cls = 'pending'; detail = `${fmtSize(it.file.size)} — will encrypt`; }
+                else if (it.status === 'encrypting') { badge = '...'; cls = 'pending'; detail = `${fmtSize(it.file.size)} — encrypting`; }
+                else if (it.status === 'ready') { detail = `${fmtSize(it.cipherBlob.size)} — ciphertext ready`; }
+                else if (it.status === 'passthrough') { detail = `${fmtSize(it.file.size)} — already encrypted`; }
+                else { badge = '!'; cls = 'bad'; detail = `<span class="file-warn">${esc(it.error || 'error')}</span>`; }
+                return `<div class="file-item">
+                    <div class="file-info">
+                        <div class="file-icon ${cls}">${badge}</div>
+                        <div class="file-details">
+                            <div class="file-name">${esc(it.file.name)}</div>
+                            <div class="file-size">${detail}</div>
+                        </div>
+                    </div>
+                    <button class="file-remove" data-i="${i}" aria-label="Remove">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>`;
+            }).join('');
+            fileList.querySelectorAll('.file-remove').forEach(btn => {
+                btn.addEventListener('click', () => { items.splice(+btn.dataset.i, 1); render(); });
+            });
+        }
+
+        async function encryptOne(it) {
+            it.status = 'encrypting'; render();
+            try {
+                const plaintext = new Uint8Array(await it.file.arrayBuffer());
+                const enc = new age.Encrypter();
+                enc.addRecipient(PUBKEY);
+                const ciphertext = await enc.encrypt(plaintext);
+                it.cipherBlob = new Blob([ciphertext], { type: 'application/octet-stream' });
+                it.outName = it.file.name.endsWith('.age') ? it.file.name : it.file.name + '.age';
+                it.status = 'ready';
+            } catch (e) {
+                it.status = 'error';
+                it.error = 'encrypt failed: ' + (e && e.message ? e.message : String(e));
+            }
+            render();
+        }
+
+        async function addFiles(files) {
+            for (const f of files) {
+                if (items.find(x => x.file.name === f.name && x.file.size === f.size)) continue;
+                const it = { file: f, status: 'pending' };
+                items.push(it);
+                if (await detectAge(f)) {
+                    it.status = 'passthrough';
+                    it.cipherBlob = f;
+                    it.outName = f.name;
+                }
+            }
+            render();
+            for (const it of items) {
+                if (it.status === 'pending') await encryptOne(it);
+            }
+        }
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            addFiles(e.dataTransfer.files);
+        });
+        fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+
+        clearBtn.addEventListener('click', () => {
+            items = []; render();
+            uploadStatus.style.display = 'none';
+        });
+
+        function showStatus(msg, type) {
+            uploadStatus.textContent = msg;
+            uploadStatus.className = `upload-status ${type}`;
+            uploadStatus.style.display = 'block';
+        }
+        function resetProgress() {
+            uploadProgress.style.display = 'none';
+            progressFill.style.width = '0%';
+            uploadBtn.disabled = false;
+            clearBtn.disabled = false;
+        }
+
+        // HTTP headers must be ISO-8859-1. Strip anything outside printable ASCII.
+        function asciiSafe(s) { return String(s).replace(/[^\x20-\x7E]/g, ''); }
+
+        async function uploadOneRaw(it, token, timeoutMs) {
+            const ctl = new AbortController();
+            const t = setTimeout(() => ctl.abort('timeout'), timeoutMs);
+            try {
+                const resp = await fetch('/upload-encrypted-raw', {
+                    method: 'POST',
+                    body: it.cipherBlob,
+                    headers: {
+                        'Authorization': 'Bearer ' + asciiSafe(token),
+                        'Content-Type': 'application/octet-stream',
+                        'X-Filename': asciiSafe(encodeURIComponent(it.outName))
+                    },
+                    signal: ctl.signal,
+                    cache: 'no-store'
+                });
+                clearTimeout(t);
+                let body = {};
+                try { body = await resp.json(); } catch (e) {}
+                if (resp.ok) return { ok: true, body };
+                if (resp.status === 401) return { ok: false, err: 'unauthorized — bad token' };
+                return { ok: false, err: `HTTP ${resp.status} ${body.message || resp.statusText}` };
+            } catch (e) {
+                clearTimeout(t);
+                if (e.name === 'AbortError' || String(e).includes('timeout')) {
+                    return { ok: false, err: 'timed out after ' + (timeoutMs/1000) + 's — request never completed (likely network/proxy)' };
+                }
+                return { ok: false, err: 'fetch failed: ' + (e && e.message ? e.message : String(e)) };
+            }
+        }
+
+        uploadBtn.addEventListener('click', async () => {
+            const rawToken = tokenInput.value;
+            const token = asciiSafe(rawToken).trim();
+            if (!token) return showStatus('Enter the access token first.', 'error');
+            if (token !== rawToken.trim()) {
+                tokenInput.value = token;
+                sessionStorage.setItem('uploadToken', token);
+                showStatus('Cleaned non-ASCII characters from token. Re-checking...', 'error');
+            }
+            const ready = items.filter(it => it.status === 'ready' || it.status === 'passthrough');
+            if (ready.length === 0) return showStatus('No ciphertext ready to upload.', 'error');
+            if (items.some(it => it.status === 'encrypting' || it.status === 'pending'))
+                return showStatus('Wait for encryption to finish.', 'error');
+
+            uploadProgress.style.display = 'block';
+            uploadBtn.disabled = true;
+            clearBtn.disabled = true;
+            let done = 0, errors = [];
+
+            for (const it of ready) {
+                progressText.textContent = `Uploading ${it.outName} (${done+1}/${ready.length})...`;
+                progressFill.style.width = Math.round(done / ready.length * 100) + '%';
+                const r = await uploadOneRaw(it, token, 45000);
+                if (r.ok) {
+                    done++;
+                } else {
+                    errors.push(`${it.outName}: ${r.err}`);
+                }
+            }
+
+            resetProgress();
+            if (errors.length === 0) {
+                showStatus(`Uploaded ${done} encrypted file(s). Server stored ciphertext only.`, 'success');
+                items = []; render();
+            } else {
+                showStatus(`Done. ${done} succeeded, ${errors.length} failed:\n${errors.join('\n')}`, 'error');
+            }
+        });
+    </script>
+</body>
+</html>
